@@ -5,6 +5,7 @@ var io = require('socket.io')(server);
 var port = process.env.PORT || 80;
 var code = [];
 var data = {"botname":"","bot":[],"projectile":[]};
+var clients = []
 
 function Bot (x,y) {
     this.x = x;
@@ -23,6 +24,7 @@ app.use('/', express.static('public'));
 //Socket Goodness
 io.on('connection', function(socket){
   console.log('A user has connected');
+  clients.push(socket.id);
   socket.on('code submission', function(code){
   	console.log(code);
   	console.log('bot name: ' + code[0]);
@@ -31,6 +33,7 @@ io.on('connection', function(socket){
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');
+    clients.splice(array.indexOf(socket.id),1);
   });
 });
 
