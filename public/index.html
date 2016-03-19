@@ -20,11 +20,25 @@
           <h1>Some sort of bot game</h1>
           <p class="lead">This is a bot game</p>
         </div>
-
+	<canvas id="arena" width="500px" height="500px">
+	</canvas>
+	<div id="text">
+	</div>
       </div><!-- /.container -->
 
 
-
+  <script>
+    context = document.getElementById('arena').getContext("2d");
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState == 4 && xhttp.status == 200) {
+	document.getElementById("text").innerHTML = xhttp.responseText;
+      }
+    };
+    xhttp.open("GET", "positionsexample.json", true);
+    xhttp.send();
+    
+  </script>
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/main.js"></script>
