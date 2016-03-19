@@ -12,7 +12,8 @@ function Bot (clientId,x,y,botName,code) {
     this.x = x;
     this.y = y;
     this.angle = 0;
-    this.code = codeFunc;
+    //this.code = codeFunc;
+    this.code = code;
     this.color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
 }
 
@@ -43,9 +44,9 @@ io.on('connection', function(socket){
     console.log("Creating new bot "+code);
     
     // !!MAJOR SECURITY RISK!!
-    tempString = "function codeFunc() " + code;
-    console.log(tempString);
-    eval("function codeFunc() " + code);
+    //tempString = "function codeFunc() {" + code + "}";
+    //console.log(tempString);
+    //eval(tempString);
     if (!hasBot(socket.id)) {
       console.log("Creating new bot "+code);
       data["bot"].push(new Bot(socket.id,randInt(0,999),randInt(0,499),name,code));
@@ -69,8 +70,8 @@ io.on('connection', function(socket){
 
 function updateBoardTick() {
   // console.log(data);
-  for (i = 0; i < data["bot"].length; i++) {
-  	data["bot"][i].code();
+	for (i = 0; i < data["bot"].length; i++) {
+  		//console.log(data["bot"][i].code);
   }
   io.sockets.emit('board-update', data);
 }
