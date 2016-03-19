@@ -2,7 +2,11 @@
   display: block;
   margin: 0 auto;
 }
-
+    #editor {
+      position: absolute;
+      width: 80em;
+      height: 40em;
+    }
 .code-input {
   width: 100%;
   margin: 0;

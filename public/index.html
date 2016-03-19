@@ -11,6 +11,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
+  <script src="js/ace.js" type="text/javascript" charset="utf-8"></script>
   <script src="/main.js"></script>
 </head>
 <body>
@@ -32,15 +33,23 @@
 	    </form>
 	  </div>
     Bot Name: <input type="text" id="bot-name"><br>
-	  <textarea class="panel-body code-input" id="code-area">code</textarea>
+	  <div id="editor" >
+var 9 = yellow
+yo mama is so fat
+if (){}</div>
+
 	</div>
       </div><!-- /.container -->
   <script>
+      var editor1 = ace.edit("editor");
+
+    editor1.setTheme("ace/theme/monokai");
+    editor1.getSession().setMode("ace/mode/javascript");
   context = document.getElementById('arena').getContext("2d");
   var socket = io();
   socket.emit('connection');
   $('form').submit(function(){
-    socket.emit('code submission', $('#bot-name').val(),$('#code-area').val());
+    socket.emit('code submission', $('#bot-name').val(),editor1.getValue());
     return false;
   });
   function clearScreen(context) {
