@@ -49,7 +49,7 @@ io.on('connection', function(socket){
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');
-    var index = array.indexOf(socket.id)
+    var index = array.indexOf(socket.id);
     if (index > -1) {
       clients.splice(index,1);
     }
