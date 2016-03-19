@@ -17,6 +17,39 @@ function Bot (clientId,x,y,botName,code) {
     this.color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
 }
 
+function moveBot(clientId,distanceX,distanceY) {
+  var i = 0;
+  while (i < data["bot"].length) {
+    if (data["bot"][i]["clientId"] == clientId) {
+      if ((data["bot"][i]["x"] + distanceX < 1000) || (data["bot"][i]["x"] + distanceX > 0)) {
+	data["bot"][i]["x"] += distanceX;
+      }
+      if ((data["bot"][i]["y"] + distanceY < 500) || (data["bot"][i]["y"] + distanceY > 0)) {
+	data["bot"][i]["y"] += distanceY;
+      }
+      return true;
+    }
+    i++;
+  }  
+}
+
+function rotateBot(clientId,degrees) {
+  var i = 0;
+  while (i < data["bot"].length) {
+      if (data["bot"][i]["clientId"] == clientId) {
+	if (data["bot"][i]["angle"] + degrees < 360) {
+	  if (data["bot"][i]["angle"] + degrees > 0) {
+	    data["bot"][i]["angle"] += degrees;
+	  } else {
+	    data["bot"][i]["angle"] = 360 - (data["bot"][i]["angle"]+degrees);
+	  }
+	} else {
+	  data["bot"][i]["angle"] = 0 + (data["bot"][i]["angle"]+degrees);
+	}
+      }
+  }
+}
+
 //Server goodness
 server.listen(port, function () {
   console.log('Server listening at port %d', port);
@@ -27,7 +60,7 @@ app.use('/', express.static('public'));
 
 function deleteClient(clientId) {
   var i = 0;
-  removed = false;
+  var removed = false;
   while ((i < clients.length) && (!removed)) {
     if (clients[i] == clientId) {
       clients.splice(i,1);
@@ -89,8 +122,9 @@ io.on('connection', function(socket){
 
 function updateBoardTick() {
   // console.log(data);
-	for (i = 0; i < data["bot"].length; i++) {
-  		//console.log(data["bot"][i].code);
+  for (i = 0; i < data["bot"].length; i++) {
+    botClientId = data["bot"][i]["clientId"];
+    moveBot(botClientId,randInt(0,100),randInt(0,100));
   }
   io.sockets.emit('board-update', data);
 }
