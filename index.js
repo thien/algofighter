@@ -4,10 +4,12 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 80;
 var data = {"bot":[],"projectile":[]};
+var code = [];
 
 function Bot (x,y) {
     this.x = x;
     this.y = y;
+    this.angle = 0;
 }
 
 //Server goodness
