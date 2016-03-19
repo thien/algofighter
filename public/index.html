@@ -32,12 +32,16 @@
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
-	document.getElementById("text").innerHTML = xhttp.responseText;
+	var jsonData = xhttp.responseText;
       }
     };
     xhttp.open("GET", "positionsexample.json", true);
     xhttp.send();
-    
+    var data = JSON.parse(jsonData);
+    console.log(data);
+    for (var i = 0; i < data["positions"].length; i++) {
+      console.log(data["positions"][i])
+    }
   </script>
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
