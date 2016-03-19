@@ -25,7 +25,7 @@ server.listen(port, function () {
 //Routing
 app.use('/', express.static('public'));
 
-function removeClient(clientId) {
+function deleteClient(clientId) {
   var i = 0;
   removed = false;
   while ((i < clients.length) && (!removed)) {
