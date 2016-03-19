@@ -30,21 +30,6 @@
 		<th>Name</th>
 		<th>Noms</th>
 	</tr>
-	<tr>
-		<td>Jill</td>
-		<td>Smith</td>
-		<td>50</td>
-	</tr>
-	<tr>
-		<td>Eve</td>
-		<td>Jackson</td>
-		<td>94</td>
-	</tr>
-	<tr>
-		<td>Eve</td>
-		<td>Jackson</td>
-		<td>94</td>
-	</tr>
 	</table>
 </div>
 
@@ -98,10 +83,25 @@
 
 
   function drawtable(data) {
-  	for (i = 0; i < data.length; i++) {
-  		console.log(i);
-  // 		$('#messages').append($('<li>').text(data));
+  	$("#table").find("tr:gt(0)").remove();
+  	for (i = 0; i < data["bot"].length; i++) {
+  		$("#table").find('tbody')
+	    .append($('<tr>')
+	        .append($('<td>')
+	                .text(data["bot"][i]["color"])
+	        )
+	        .append($('<td>').text(data["bot"][i]["botName"]))
+	        .append($('<td>').text(0))
+	    );
+
+
+  		// $('#table').closest('<tr>').remove();
+  		// $('#table').append($('<td>').text(data["bot"][i]["color"]));
+  		// $('#table').append($('<td>').text(data["bot"][i]["clientId"]));
+  		// $('#table').append($('<td>').text(0));
+  		// $('#table').append($('</tr>');
 		// $('.panel-body').animate({scrollTop: $('.panel-body').prop("scrollHeight")}, 0);
+  		// console.log(data["bot"][i]);
   	}
   }
 
