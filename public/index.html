@@ -88,7 +88,7 @@
   		$("#table").find('tbody')
 	    .append($('<tr>')
 	        .append($('<td>')
-	                .text(data["bot"][i]["color"])
+	                .html('<div class="coob" style="width:10px;height:10px;display:block;background-color:'+data["bot"][i]["color"]+ '"></div>')
 	        )
 	        .append($('<td>').text(data["bot"][i]["botName"]))
 	        .append($('<td>').text(0))
