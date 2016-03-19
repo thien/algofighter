@@ -42,8 +42,8 @@ function deleteBot(clientId) {
   var i = 0;
   removed = false;
   while ((i < data["bot"].length) && (!removed)) {
-    if (data["bots"][i]["clientId"] == clientId) {
-      data["bots"].splice(i,1);
+    if (data["bot"][i]["clientId"] == clientId) {
+      data["bot"].splice(i,1);
       removed = true;
       return true;
     }
