@@ -12,6 +12,7 @@
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="js/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
   <script src="/main.js"></script>
 </head>
 <body>
@@ -39,10 +40,9 @@ var yellow = 9;</div>
 	</div>
       </div><!-- /.container -->
   <script>
-      var editor1 = ace.edit("editor");
-
-    editor1.setTheme("ace/theme/github");
-    editor1.getSession().setMode("ace/mode/javascript");
+		var editor1 = ace.edit("editor");
+		editor1.setTheme("ace/theme/github");
+		editor1.getSession().setMode("ace/mode/javascript");
   context = document.getElementById('arena').getContext("2d");
   var socket = io();
   socket.emit('connection');
