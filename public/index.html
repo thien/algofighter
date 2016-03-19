@@ -35,6 +35,9 @@
       
 
   <script>
+    function clearScreen(context) {
+    	 context.clearRect (0,0,1000,500);
+    }
     function drawBot(x,y,context) {
 	  context.fillRect(x,y,10,10);
 	  context.stroke(); 
@@ -49,20 +52,22 @@
       if (xhttp.readyState == 4 && xhttp.status == 200) {
 	var jsonData = xhttp.responseText;
 	var data = JSON.parse(jsonData);
-	console.log(data);
 	for (var i = 0; i < data["bot"].length; i++) {
 	  var bot = data["bot"][i];
 	  drawBot(bot["x"],bot["y"],context);
 	}
 	for (var i = 0; i < data["projectile"].length; i++) {
 	  var projectile = data["projectile"][i];
-	  console.log(projectile);
 	  drawProjectile(projectile["x"],projectile["y"],context);
 	}
       }
     };
-    xhttp.open("GET", "positionsexample.json", true);
-    xhttp.send();
+    function updateGameState() {
+      clearScreen(context);
+      xhttp.open("GET", "positionsexample.json", true);
+      xhttp.send();
+    }
+    setInterval(updateGameState,1000);
   </script>
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
