@@ -24,13 +24,28 @@ server.listen(port, function () {
 //Routing
 app.use('/', express.static('public'));
 
+function hasBot(clientId) {
+  var i = 0;
+  while (i < data["bot"].length) {
+    if (data["bot"][i]["clientId"] == clientId) {
+      return true;
+    }
+    i++;
+  }
+  return false;
+}
+
 //Socket Goodness
 io.on('connection', function(socket){
   console.log('A user has connected');
   clients.push(socket.id);
   socket.on('code submission', function(name,code){
-    console.log("Creating new bot "+code[0]);
-    data["bot"].push(new Bot(socket.id,randInt(0,999),randInt(0,499),name,code));
+    if (!hasBot(socket.id)) {
+      console.log("Creating new bot "+code);
+      data["bot"].push(new Bot(socket.id,randInt(0,999),randInt(0,499),name,code));
+    } else {
+      console.log("User tried to recreate a bot.");
+    }
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');
