@@ -65,6 +65,7 @@
     }
   }
   socket.on('board-update', function(jsonData){
+    console.log(jsonData);
     updateGameState(jsonData);
   });
   </script>
