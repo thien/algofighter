@@ -3,7 +3,7 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 80;
-var data = {};
+var data = {"bot":[],"projectile":[]};
 
 function Bot (x,y) {
     this.x = x;
@@ -31,10 +31,11 @@ io.on('connection', function(socket){
 });
 
 function addBot(x,y) {
-  data.push(new Bot(x,y));
+  data["bot"].push(new Bot(x,y));
 }
 
 function updateBoardTick() {
+  console.log(data);
   io.emit('board update', data);  
 }
 
