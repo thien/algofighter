@@ -30,7 +30,7 @@ function moveBot(clientId,distanceX,distanceY) {
       return true;
     }
     i++;
-  }  
+  }
 }
 
 function rotateBot(clientId,degrees) {

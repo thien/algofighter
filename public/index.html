@@ -88,21 +88,12 @@
   	for (i = 0; i < data["bot"].length; i++) {
   		$("#table").find('tbody')
 	    .append($('<tr>')
-	        .append($('<td>')
+	     .append($('<td>')
 	                .html('<div class="coob" style="width:10px;height:10px;display:block;background-color:'+data["bot"][i]["color"]+ '"></div>')
 	        )
 	        .append($('<td>').text(data["bot"][i]["botName"]))
 	        .append($('<td>').text(0))
 	    );
-
-
-  		// $('#table').closest('<tr>').remove();
-  		// $('#table').append($('<td>').text(data["bot"][i]["color"]));
-  		// $('#table').append($('<td>').text(data["bot"][i]["clientId"]));
-  		// $('#table').append($('<td>').text(0));
-  		// $('#table').append($('</tr>');
-		// $('.panel-body').animate({scrollTop: $('.panel-body').prop("scrollHeight")}, 0);
-  		// console.log(data["bot"][i]);
   	}
   }
 
@@ -110,9 +101,6 @@
     updateGameState(jsonData);
     drawtable(jsonData);
   });
-  // socket.on('scoreboard-update', function(jsonData){
-  //   drawtable(jsonData);
-  // });
   </script>
 </body>
 
