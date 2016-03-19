@@ -37,7 +37,6 @@
       
 
   <script>
-    var socket = io();
     $('form').submit(function(){
       socket.emit('code submission', $('#code-area').val());
       return false;
