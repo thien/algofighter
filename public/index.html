@@ -39,6 +39,10 @@
 	  context.fillRect(x,y,10,10);
 	  context.stroke(); 
     }
+    function drawProjectile(x,y,context) {
+	  context.fillRect(x,y,2,2);
+	  context.stroke(); 
+    }
     context = document.getElementById('arena').getContext("2d");
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -46,9 +50,14 @@
 	var jsonData = xhttp.responseText;
 	var data = JSON.parse(jsonData);
 	console.log(data);
-	for (var i = 0; i < data["positions"].length; i++) {
-	  var bot = data["positions"][i];
+	for (var i = 0; i < data["bot"].length; i++) {
+	  var bot = data["bot"][i];
 	  drawBot(bot["x"],bot["y"],context);
+	}
+	for (var i = 0; i < data["projectile"].length; i++) {
+	  var projectile = data["projectile"][i];
+	  console.log(projectile);
+	  drawProjectile(projectile["x"],projectile["y"],context);
 	}
       }
     };
