@@ -87,7 +87,7 @@
   	for (i = 0; i < data["bot"].length; i++) {
   		$("#table").find('tbody')
 	    .append($('<tr>')
-	        .append($('<td>')
+	        .append($('<td style="color:'+data["bot"][i]["color"])+'">')
 	                .text(data["bot"][i]["color"])
 	        )
 	        .append($('<td>').text(data["bot"][i]["botName"]))
