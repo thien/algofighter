@@ -24,6 +24,32 @@ server.listen(port, function () {
 //Routing
 app.use('/', express.static('public'));
 
+function removeClient(clientId) {
+  var i = 0;
+  removed = false;
+  while ((i < clients.length) && (!removed)) {
+    if (clients[i] == socket.id) {
+      clients.splice(i,1);
+      removed = true;
+      return true;
+    }
+    i++;
+  }
+}
+
+function deleteBot(clientId) {
+  var i = 0;
+  removed = false;
+  while ((i < data["bot"].length) && (!removed)) {
+    if (data["bots"][i]["clientId"] == socket.id) {
+      data["bots"].splice(i,1);
+      removed = true;
+      return true;
+    }
+    i++;
+  }
+}
+
 function hasBot(clientId) {
   var i = 0;
   while (i < data["bot"].length) {
@@ -43,24 +69,16 @@ io.on('connection', function(socket){
     console.log("Creating new bot "+code);
     // !!MAJOR SECURITY RISK!!
     eval("function codeFunc() " + code);
-    if (!hasBot(socket.id)) {
-      console.log("Creating new bot "+code);
-      data["bot"].push(new Bot(socket.id,randInt(0,999),randInt(0,499),name,code));
-    } else {
-      console.log("User tried to recreate a bot.");
+    if (hasBot(socket.id)) {
+      deleteBot(clientID);
     }
+    console.log("Creating new bot "+code);
+    data["bot"].push(new Bot(socket.id,randInt(0,999),randInt(0,499),name,code));
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');
-    var i = 0;
-    removed = true;
-    while ((i < data["bot"].length) && (!removed)) {
-      if (data["bots"][i]["clientId"] == socket.id) {
-	clients.splice(i,1);
-	removed = true;
-      }
-      i++;
-    }
+    deleteBot(clientId);
+    deleteClient(clientId);
   });
 });
 
