@@ -54,7 +54,7 @@ io.on('connection', function(socket){
     console.log('user disconnected');
     var i = 0;
     removed = true;
-    while ((i < data["bots"].length) && (!removed)) {
+    while ((i < data["bot"].length) && (!removed)) {
       if (data["bots"][i]["clientId"] == socket.id) {
 	clients.splice(i,1);
 	removed = true;
