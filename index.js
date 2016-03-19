@@ -30,20 +30,14 @@ io.on('connection', function(socket){
   console.log('A user has connected');
   clients.push(socket.id);
   socket.on('code submission', function(code){
-  	console.log(code);
-  	console.log('bot name: ' + code[0]);
-    console.log('code submitted: ' + code[1]);
-    addBot(socket.id,randInt(0,999),randInt(0,499),code[0],code[1]);
+    console.log("Creating new bot "+code[0]);
+    data["bot"].push(new Bot(socket.id,randInt(0,999),randInt(0,499),code[0],code[1]));
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');
     clients.splice(array.indexOf(socket.id),1);
   });
 });
-
-function addBot(x,y) {
-  data["bot"].push(new Bot(x,y));
-}
 
 function updateBoardTick() {
   // console.log(data);
