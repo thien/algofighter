@@ -1,9 +1,17 @@
 #arena {
   display: block;
   margin: 0 auto;
+   float: left;
 }
 #editor {
   font-size: 12px;
   width: 100%;
   height: 400px;
+  float: left;
+}
+#table {
+  width:200px;
+  float: right;
+    display: block;
+  margin: 0 auto;
 }

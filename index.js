@@ -101,7 +101,7 @@ io.on('connection', function(socket){
   clients.push(socket.id);
   socket.on('code submission', function(name,code){
     console.log("Creating new bot "+code);
-    
+
     // !!MAJOR SECURITY RISK!!
     //tempString = "function codeFunc() {" + code + "}";
     //console.log(tempString);
