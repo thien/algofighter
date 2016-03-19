@@ -27,7 +27,7 @@
 	  <div class="panel-heading">
 	    Input code
 	    <form action="">
-	      <button type="button" class="btn btn-default btn-sm pull-right run-code">
+	      <button type="submit" class="btn btn-default btn-sm pull-right run-code">
 		<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Run code
 	      </button>
 	    </form>
@@ -39,6 +39,7 @@
 
   <script>
     $('form').submit(function(){
+      var socket = io();
       socket.emit('code submission', $('#code-area').val());
       return false;
     });
@@ -74,8 +75,6 @@
       xhttp.open("GET", "positionsexample.json", true);
       xhttp.send();
     }
-    var socket = io();
-    socket.emit('code submission', $('#code-area').val());
     //setInterval(updateGameState,1000);
   </script>
 </body>
