@@ -28,9 +28,9 @@ app.use('/', express.static('public'));
 io.on('connection', function(socket){
   console.log('A user has connected');
   clients.push(socket.id);
-  socket.on('code submission', function(code){
+  socket.on('code submission', function(name,code){
     console.log("Creating new bot "+code[0]);
-    data["bot"].push(new Bot(socket.id,randInt(0,999),randInt(0,499),code[0],code[1]));
+    data["bot"].push(new Bot(socket.id,randInt(0,999),randInt(0,499),name,code));
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');
