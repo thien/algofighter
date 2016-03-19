@@ -21,7 +21,7 @@ app.use('/', express.static('public'));
 //Socket Goodness
 io.on('connection', function(socket){
   console.log('A user has connected');
-  socket.on('code submission', code, function(){
+  socket.on('code submission', function(code){
     console.log('code submitted: ' + code);
     addBot(randInt(0,999),randInt(0,499));
   });
