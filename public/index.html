@@ -14,34 +14,46 @@
 </head>
 <body>
 
-      <div class="container">
-
+      <div class="container-fluid">
         <div class="starter-template">
           <h1>Some sort of bot game</h1>
           <p class="lead">This is a bot game</p>
         </div>
-	<canvas id="arena" width="500px" height="500px">
+	<canvas id="arena" class="panel panel-default" width="1000px" height="500px">
 	</canvas>
-	<div id="text">
+	<hr>
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	    Input code
+	    <button type="button" class="btn btn-default btn-sm pull-right run-code">
+	      <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Run code
+	    </button>
+	  </div>
+	  <textarea class="panel-body code-input">code</textarea>
 	</div>
       </div><!-- /.container -->
-
+      
 
   <script>
+    function drawBot(x,y,context) {
+	  context.fillRect(x,y,10,10);
+	  context.stroke(); 
+    }
     context = document.getElementById('arena').getContext("2d");
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
 	var jsonData = xhttp.responseText;
+	var data = JSON.parse(jsonData);
+	console.log(data);
+	for (var i = 0; i < data["positions"].length; i++) {
+	  var bot = data["positions"][i];
+	  drawBot(bot["x"],bot["y"],context);
+	}
       }
     };
     xhttp.open("GET", "positionsexample.json", true);
     xhttp.send();
-    var data = JSON.parse(jsonData);
-    console.log(data);
-    for (var i = 0; i < data["positions"].length; i++) {
-      console.log(data["positions"][i])
-    }
   </script>
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
