@@ -36,7 +36,7 @@ function addBot(x,y) {
 
 function updateBoardTick() {
   console.log(data);
-  io.send('board-update', data);  
+  io.sockets.emit('board-update', data);  
 }
 
 function randInt(min, max) {
