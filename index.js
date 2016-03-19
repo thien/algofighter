@@ -75,7 +75,7 @@ io.on('connection', function(socket){
     //eval(tempString);
     //eval("function codeFunc() " + code);
     if (hasBot(socket.id)) {
-      deleteBot(clientID);
+      deleteBot(socket.id);
     }
     console.log("Creating new bot "+code);
     data["bot"].push(new Bot(socket.id,randInt(0,999),randInt(0,499),name,code));
