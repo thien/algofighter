@@ -25,16 +25,23 @@
 	<div class="panel panel-default">
 	  <div class="panel-heading">
 	    Input code
-	    <button type="button" class="btn btn-default btn-sm pull-right run-code">
-	      <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Run code
-	    </button>
+	    <form action="">
+	      <button type="button" class="btn btn-default btn-sm pull-right run-code">
+		<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Run code
+	      </button>
+	    </form>
 	  </div>
-	  <textarea class="panel-body code-input">code</textarea>
+	  <textarea class="panel-body code-input" id="code-area">code</textarea>
 	</div>
       </div><!-- /.container -->
       
 
   <script>
+    var socket = io();
+    $('form').submit(function(){
+      socket.emit('code submission', $('#code-area').val());
+      return false;
+    });
     function clearScreen(context) {
     	 context.clearRect (0,0,1000,500);
     }
