@@ -20,14 +20,14 @@ var Bot = function(name, fireMethod) {
 }
 
 function IOevent(name, fireLogic) {
-	eval("fire = {" + fireLogic + "}");
-	aBot = new Bot(name, fire.myFunction);
+	eval(fireLogic);
+	aBot = new Bot(name, myFunction);
 	bots.push(aBot);
 }
 
 //aBot = new Bot("Henry", "{fireLoic() {return false}}");
 //bots.push(aBot);
 
-IOevent("Bill", "myFunction() {return true}")
+IOevent("Bill", "function myFunction() {return true}")
 console.log(aBot.Fire())
 //console.log(aBot.Fire())
