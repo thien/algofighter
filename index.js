@@ -3,7 +3,6 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 80;
-var code = [];
 var data = {"bot":[],"projectile":[]};
 var clients = []
 
@@ -35,7 +34,10 @@ io.on('connection', function(socket){
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');
-    clients.splice(array.indexOf(socket.id),1);
+    var index = array.indexOf(socket.id)
+    if (index > -1) {
+      clients.splice(index,1);
+    }
   });
 });
 
