@@ -52,9 +52,14 @@ io.on('connection', function(socket){
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');
-    var index = array.indexOf(socket.id);
-    if (index > -1) {
-      clients.splice(index,1);
+    var i = 0;
+    removed = true;
+    while ((i < data["bots"].length) && (!removed)) {
+      if (data["bots"][i]["clientId"] == socket.id) {
+	clients.splice(i,1);
+	removed = true;
+      }
+      i++;
     }
   });
 });
