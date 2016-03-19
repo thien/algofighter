@@ -1,9 +1,5 @@
 var socket = io();
 socket.emit('connection');
-$('form').submit(function(){
-  socket.emit('code submission', $('#code-area').val());
-  return false;
-});
 function clearScreen(context) {
     context.clearRect (0,0,1000,500);
 }
@@ -16,8 +12,6 @@ function drawProjectile(x,y,context) {
       context.stroke(); 
 }
 
-context = document.getElementById('arena').getContext("2d");
-
 function updateGameState(data) {
   clearScreen(context);
   for (var i = 0; i < data["bot"].length; i++) {
@@ -29,5 +23,7 @@ function updateGameState(data) {
     drawProjectile(projectile["x"],projectile["y"],context);
   }
 }
-
+socket.on('board-update', function(jsonData){
+   updateGameState(jsonData);
+});
 //setInterval(updateGameState,1000);
