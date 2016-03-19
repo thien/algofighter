@@ -29,7 +29,7 @@ function deleteClient(clientId) {
   var i = 0;
   removed = false;
   while ((i < clients.length) && (!removed)) {
-    if (clients[i] == socket.id) {
+    if (clients[i] == clientId) {
       clients.splice(i,1);
       removed = true;
       return true;
