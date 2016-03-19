@@ -9,8 +9,9 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <!-- Angular badness if I feel particularly horrible -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
-
-
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/main.js"></script>
 </head>
 <body>
 
@@ -38,7 +39,7 @@
 
   <script>
     $('form').submit(function(){
-      socket.emit('code submission', $('#code-area').val());
+      socket.emit('codea submission', $('#code-area').val());
       return false;
     });
     function clearScreen(context) {
@@ -75,9 +76,6 @@
     }
     setInterval(updateGameState,1000);
   </script>
-  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/main.js"></script>
 </body>
 
 </html>
