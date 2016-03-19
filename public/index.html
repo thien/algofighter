@@ -39,7 +39,7 @@
 
   <script>
     $('form').submit(function(){
-      socket.emit('codea submission', $('#code-area').val());
+      socket.emit('code submission', $('#code-area').val());
       return false;
     });
     function clearScreen(context) {
@@ -74,7 +74,7 @@
       xhttp.open("GET", "positionsexample.json", true);
       xhttp.send();
     }
-    setInterval(updateGameState,1000);
+    //setInterval(updateGameState,1000);
   </script>
 </body>
 
