@@ -46,7 +46,9 @@ function rotateBot(clientId,degrees) {
 	} else {
 	  data["bot"][i]["angle"] = 0 + (data["bot"][i]["angle"]+degrees);
 	}
+	return true;
       }
+      i++;
   }
 }
 
@@ -125,7 +127,7 @@ function updateBoardTick() {
   for (i = 0; i < data["bot"].length; i++) {
     botClientId = data["bot"][i]["clientId"];
     moveBot(botClientId,randInt(-10,10),randInt(-10,10));
-    //rotateBot(botClientId,randInt(-10.10));
+    rotateBot(botClientId,randInt(-10.10));
   }
   io.sockets.emit('board-update', data);
 }
