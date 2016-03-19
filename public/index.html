@@ -31,6 +31,7 @@
 	      </button>
 	    </form>
 	  </div>
+    Bot Name: <input type="text" id="bot-name"><br>
 	  <textarea class="panel-body code-input" id="code-area">code</textarea>
 	</div>
       </div><!-- /.container -->
@@ -39,7 +40,8 @@
   var socket = io();
   socket.emit('connection');
   $('form').submit(function(){
-    socket.emit('code submission', $('#code-area').val());
+    var inputs = [$('#bot-name').val(),$('#code-area').val()];
+    socket.emit('code submission', inputs);
     return false;
   });
   function clearScreen(context) {
@@ -47,11 +49,11 @@
   }
   function drawBot(x,y,context) {
 	context.fillRect(x,y,10,10);
-	context.stroke(); 
+	context.stroke();
   }
   function drawProjectile(x,y,context) {
 	context.fillRect(x,y,2,2);
-	context.stroke(); 
+	context.stroke();
   }
   function updateGameState(data) {
     clearScreen(context);
