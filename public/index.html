@@ -9,11 +9,11 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <!-- Angular badness if I feel particularly horrible -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
-
-
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/main.js"></script>
 </head>
 <body>
-
       <div class="container-fluid">
         <div class="starter-template">
           <h1>Some sort of bot game</h1>
@@ -25,53 +25,50 @@
 	<div class="panel panel-default">
 	  <div class="panel-heading">
 	    Input code
-	    <button type="button" class="btn btn-default btn-sm pull-right run-code">
-	      <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Run code
-	    </button>
+	    <form action="">
+	      <button type="submit" class="btn btn-default btn-sm pull-right run-code">
+		<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Run code
+	      </button>
+	    </form>
 	  </div>
-	  <textarea class="panel-body code-input">code</textarea>
+	  <textarea class="panel-body code-input" id="code-area">code</textarea>
 	</div>
       </div><!-- /.container -->
-      
-
   <script>
-    function clearScreen(context) {
-    	 context.clearRect (0,0,1000,500);
+  context = document.getElementById('arena').getContext("2d");
+  var socket = io();
+  socket.emit('connection');
+  $('form').submit(function(){
+    socket.emit('code submission', $('#code-area').val());
+    return false;
+  });
+  function clearScreen(context) {
+      context.clearRect (0,0,1000,500);
+  }
+  function drawBot(x,y,context) {
+	context.fillRect(x,y,10,10);
+	context.stroke(); 
+  }
+  function drawProjectile(x,y,context) {
+	context.fillRect(x,y,2,2);
+	context.stroke(); 
+  }
+  function updateGameState(data) {
+    clearScreen(context);
+    for (var i = 0; i < data["bot"].length; i++) {
+      var bot = data["bot"][i];
+      drawBot(bot["x"],bot["y"],context);
     }
-    function drawBot(x,y,context) {
-	  context.fillRect(x,y,10,10);
-	  context.stroke(); 
+    for (var i = 0; i < data["projectile"].length; i++) {
+      var projectile = data["projectile"][i];
+      drawProjectile(projectile["x"],projectile["y"],context);
     }
-    function drawProjectile(x,y,context) {
-	  context.fillRect(x,y,2,2);
-	  context.stroke(); 
-    }
-    context = document.getElementById('arena').getContext("2d");
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (xhttp.readyState == 4 && xhttp.status == 200) {
-	var jsonData = xhttp.responseText;
-	var data = JSON.parse(jsonData);
-	for (var i = 0; i < data["bot"].length; i++) {
-	  var bot = data["bot"][i];
-	  drawBot(bot["x"],bot["y"],context);
-	}
-	for (var i = 0; i < data["projectile"].length; i++) {
-	  var projectile = data["projectile"][i];
-	  drawProjectile(projectile["x"],projectile["y"],context);
-	}
-      }
-    };
-    function updateGameState() {
-      clearScreen(context);
-      xhttp.open("GET", "positionsexample.json", true);
-      xhttp.send();
-    }
-    setInterval(updateGameState,1000);
+  }
+  socket.on('board-update', function(jsonData){
+    console.log(jsonData);
+    updateGameState(jsonData);
+  });
   </script>
-  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/main.js"></script>
 </body>
 
 </html>
