@@ -4,13 +4,17 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 80;
 var code = [];
-var data = {"botname":"","bot":[],"projectile":[]};
+var data = {"bot":[],"projectile":[]};
 var clients = []
 
-function Bot (x,y) {
+function Bot (clientId,x,y,botName,code) {
+    this.clientId = clientId;
+    this.botName = botName;
     this.x = x;
     this.y = y;
     this.angle = 0;
+    this.code = code;
+    this.color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
 }
 
 //Server goodness
@@ -29,7 +33,7 @@ io.on('connection', function(socket){
   	console.log(code);
   	console.log('bot name: ' + code[0]);
     console.log('code submitted: ' + code[1]);
-    addBot(randInt(0,999),randInt(0,499));
+    addBot(socket.id,randInt(0,999),randInt(0,499),code[0],code[1]);
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');

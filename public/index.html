@@ -47,8 +47,9 @@
   function clearScreen(context) {
       context.clearRect (0,0,1000,500);
   }
-  function drawBot(x,y,context) {
-	context.fillRect(x,y,10,10);
+  function drawBot(bot,context) {
+	context.fillStyle = bot["color"];
+	context.fillRect(bot["x"],bot["y"],10,10);
 	context.stroke();
   }
   function drawProjectile(x,y,context) {
@@ -59,7 +60,7 @@
     clearScreen(context);
     for (var i = 0; i < data["bot"].length; i++) {
       var bot = data["bot"][i];
-      drawBot(bot["x"],bot["y"],context);
+      drawBot(bot,context);
     }
     for (var i = 0; i < data["projectile"].length; i++) {
       var projectile = data["projectile"][i];
