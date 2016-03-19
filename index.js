@@ -124,7 +124,7 @@ function updateBoardTick() {
   // console.log(data);
   for (i = 0; i < data["bot"].length; i++) {
     botClientId = data["bot"][i]["clientId"];
-    moveBot(botClientId,randInt(0,100),randInt(0,100));
+    moveBot(botClientId,randInt(-10,10),randInt(-10,10));
   }
   io.sockets.emit('board-update', data);
 }
