@@ -42,7 +42,7 @@ function deleteBot(clientId) {
   var i = 0;
   removed = false;
   while ((i < data["bot"].length) && (!removed)) {
-    if (data["bots"][i]["clientId"] == socket.id) {
+    if (data["bots"][i]["clientId"] == clientId) {
       data["bots"].splice(i,1);
       removed = true;
       return true;
@@ -82,8 +82,8 @@ io.on('connection', function(socket){
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');
-    deleteBot(clientId);
-    deleteClient(clientId);
+    deleteBot(socket.id);
+    deleteClient(socket.id);
   });
 });
 
