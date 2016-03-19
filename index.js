@@ -73,11 +73,6 @@ io.on('connection', function(socket){
     //tempString = "function codeFunc() {" + code + "}";
     //console.log(tempString);
     //eval(tempString);
-    if (!hasBot(socket.id)) {
-      console.log("Creating new bot "+code);
-      data["bot"].push(new Bot(socket.id,randInt(0,999),randInt(0,499),name,code));
-    } else {
-      console.log("User tried to recreate a bot.");
     //eval("function codeFunc() " + code);
     if (hasBot(socket.id)) {
       deleteBot(clientID);
