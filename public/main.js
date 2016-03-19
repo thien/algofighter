@@ -15,7 +15,9 @@ function drawProjectile(x,y,context) {
       context.fillRect(x,y,2,2);
       context.stroke(); 
 }
+
 context = document.getElementById('arena').getContext("2d");
+
 function updateGameState(data) {
   clearScreen(context);
   for (var i = 0; i < data["bot"].length; i++) {
@@ -28,7 +30,4 @@ function updateGameState(data) {
   }
 }
 
-socket.on('board update', function(jsonData){
-    updateGameState(jsonData);
- });
 //setInterval(updateGameState,1000);
