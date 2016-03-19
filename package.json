@@ -18,6 +18,7 @@
   "homepage": "https://github.com/tnguyen/bot_thing#readme",
   "dependencies": {
     "express": "^4.13.4",
-    "socket.io": "^1.4.5"
+    "node-uuid": "^1.4.7",
+    "socket.io": "0.9.x"
   }
 }
