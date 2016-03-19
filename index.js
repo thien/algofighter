@@ -122,8 +122,9 @@ io.on('connection', function(socket){
 
 function updateBoardTick() {
   // console.log(data);
-	for (i = 0; i < data["bot"].length; i++) {
-  		//console.log(data["bot"][i].code);
+  for (i = 0; i < data["bot"].length; i++) {
+    botClientId = data["bot"][i]["clientId"];
+    moveBot(botClientId,randInt(0,100),randInt(0,100));
   }
   io.sockets.emit('board-update', data);
 }
