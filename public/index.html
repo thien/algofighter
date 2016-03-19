@@ -65,7 +65,6 @@
   function drawBot(bot,context) {
 	context.fillStyle = bot["color"];
 	context.fillRect(bot["x"],bot["y"],10,10);
-	context.stroke();
 	context.beginPath();
 	context.arc(bot["x"]+5, bot["y"]+5, 2+5*Math.sin(bot["angle"]/360 * 2*Math.PI), 2+5*Math.cos(bot["angle"]/360 * 2*Math.PI), 2*Math.PI);
 	context.stroke();
