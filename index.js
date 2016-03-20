@@ -75,7 +75,7 @@ function execAssembly(clientId,cmnd, val) {
 			botShoot(clientId)
 			break;
 		default:
-			console.log("PANIC!")
+			console.log("Unrecognised Instruction: "+cmnd+" with val: "+val)
 	}
 }
 
