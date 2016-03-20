@@ -54,7 +54,7 @@ function randInt(min, max) {
 var moves = ["MVX 10","MVX -10","ROT 90", "ROT -90", "ROT 180", "SHT", "SHT", "SHT", "SHT", "LOK"];
 var moveString = "";
 for (var i = 0; i < randInt(6,20); i++) {
-  moveString += moves[randInt(0,moves.length)-1] + "\n";
+  moveString += moves[randInt(0,moves.length-1)] + "\n";
 }
 moveString += "JMP 0";
 document.getElementById("editor").innerHTML = moveString;
