@@ -5,11 +5,14 @@
 }
 #editor {
   font-size: 12px;
-  max-width: 1200px;
-  min-width: 800px;
+  max-width: 50%;
   height: 400px;
-    margin: 0 auto;
+  float: left;
     margin-bottom: 4px;
+}
+
+.help-text {
+  float: left;
 }
 #table {
   width:200px;
