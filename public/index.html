@@ -51,7 +51,7 @@ function randInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 function genRandomCode() {
-  var moves = ["MVX 10","MVX -10","ROT 90", "ROT -90", "ROT 180", "SHT", "SHT", "SHT", "SHT", "LOK", "LOK", "PSS"];
+  var moves = ["MVX 10","MVX -10","MVY 10","MVY -10","MVX 20","MVY 20","MVY -20","MVX -20","ROT 90", "ROT 45","ROT -45", "ROT -90", "ROT 180","SHT", "SHT","SHT", "SHT", "SHT", "SHT", "LOK", "LOK", "PSS"];
   var moveString = "";
   for (var i = 0; i < randInt(6,20); i++) {
     moveString += moves[randInt(0,moves.length-1)] + "\n";
