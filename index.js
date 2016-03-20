@@ -9,7 +9,7 @@ var data = {
 };
 var clients = []
 var PI = Math.PI;
-cmndList = ['JMP', 'MVX', 'MVY', 'ROT', 'SHT']
+cmndList = ['JMP', 'MVX', 'MVY', 'ROT', 'SHT','HLT']
 
 function Bot(clientId, x, y, botName, code) {
     this.clientId = clientId;
@@ -25,6 +25,7 @@ function Bot(clientId, x, y, botName, code) {
     this.exec = function () {
       try {
 	if (this.pc > -1) {
+	  console.log(this.pc);
 	  execAssembly(this.clientId,this.code[this.pc][0],this.code[this.pc][1]);
 	  this.pc+= 1;
 	  io.sockets.connected[clientId].emit('compile-error',"");
@@ -83,9 +84,13 @@ function execAssembly(clientId, cmnd, val) {
         case 3: //rot
             rotateBot(clientId, val);
             break;
-        case 4: //sht1
+        case 4: //sht
             botShoot(clientId);
             break;
+	case 5: //hlt
+	    var bot = getBot(clientId);
+            bot.pc = -2;
+	    break;
         default:
             console.log("Unrecognised Instruction: " + cmnd + " with val: " + val)
     }
