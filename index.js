@@ -120,9 +120,9 @@ function execAssembly(clientId, cmnd, val) {
 	      }
 	      var angle = Math.atan((-randomBot["x"]+bot["x"])/(randomBot["y"]-bot["y"]));
 	      if ((angle < PI) && (angle > -PI)) {
-		bot.angle = angle;
-	      } else {
 		bot.angle = angle + PI;
+	      } else {
+		bot.angle = angle;
 	      }
 	      console.log(bot.angle);
 	    }
