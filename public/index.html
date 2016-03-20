@@ -35,6 +35,7 @@
 			</div>
 			<form class="form-inline">
 				<div class="form-group">
+
 					<input type="text" class="form-control" id="bot-name" placeholder="Bot Name" value="">
 					<script>document.getElementById("bot-name").value = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);</script>
 					<button type="submit" class="btn btn-default btn-sm pull-right run-code">
@@ -62,26 +63,26 @@ genRandomCode();
 </script>
 
 
-  <div class="well">
+  <div class="welle">
     <ul class="help-text">
   <li><h3>Movement</h3></li>
-  <li><code>MVX distance</code>Move distance pixels to the right</li>
-  <li><code>MVY distance</code>Move distance pixels down</li>
-  <li><code>MDR distance</code>Move distance pixels forwards</li>
-  <li><code>ROT angle</code>Move angle degrees clockwise</li>
+  <li><code>MVX distance</code> Move distance pixels to the right</li>
+  <li><code>MVY distance</code> Move distance pixels down</li>
+  <li><code>MDR distance</code> Move distance pixels forwards</li>
+  <li><code>ROT angle</code> Move angle degrees clockwise</li>
   <li><h3>Offense</h3></li>
-  <li><code>LOK</code>Point towards a random enemy</li>
-  <li><code>SHT</code>Shoot the gun</li>
+  <li><code>LOK</code> Point towards a random enemy</li>
+  <li><code>SHT</code> Shoot the gun</li>
   <li><h3>Control</h3></li>
-  <li><code>HLT</code>Halt execution</li>
-  <li><code>JMP address</code>Jump to executing line address</li>
-  <li><code>PSS</code>Do nothing for this turn</li>
+  <li><code>HLT</code> Halt execution</li>
+  <li><code>JMP address</code> Jump to executing line address</li>
+  <li><code>PSS</code> Do nothing for this turn</li>
   <li><h3>Register</h3></li>
   <li>Each bot has a single register that can store one value.</li>
-  <li><code>SET value</code>Set the register to be value</li>
-  <li><code>REG value</code>Alias of SET</li>
-  <li><code>ADD value</code>Add value to the register</li>
-  <li><code>IR0 address</code>If the value of the register is zero, JMP to address</li>
+  <li><code>SET value</code> Set the register to be value</li>
+  <li><code>REG value</code> Alias of SET</li>
+  <li><code>ADD value</code> Add value to the register</li>
+  <li><code>IR0 address</code> If the value of the register is zero, JMP to address</li>
 
 </ul>
 
@@ -97,7 +98,7 @@ genRandomCode();
 	//   display: "none",
 	//   visibility: "hidden"
 	// });
-
+	$('.ace_gutter-cell ').first().addClass('active');
 	var editor1 = ace.edit("editor");
 	editor1.getSession().setUseWorker(false);
 	editor1.setOption("firstLineNumber", 0);
