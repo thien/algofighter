@@ -32,6 +32,7 @@
 				</table>
 			</div>
 		</div>
+		<div id="compile-error"></div>
 		<div class="toploader">
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -61,11 +62,11 @@
 	socket.emit('connection');
 	var previousData = {};
 	$('form').submit(function(){
-	socket.emit('code submission', $('#bot-name').val(),editor1.getValue());
-	return false;
+	  socket.emit('code submission', $('#bot-name').val(),editor1.getValue());
+	  return false;
 	});
 	function clearScreen(context) {
-	context.clearRect (0,0,1000,500);
+	  context.clearRect (0,0,1000,500);
 	}
 	function drawBot(bot,context) {
 		context.fillStyle = bot["color"];
@@ -82,32 +83,35 @@
 	function updateGameState(data) {
 	clearScreen(context);
 	for (var i = 0; i < data["bot"].length; i++) {
-	var bot = data["bot"][i];
-	drawBot(bot,context);
+	  var bot = data["bot"][i];
+	  drawBot(bot,context);
 	}
 	for (var i = 0; i < data["projectile"].length; i++) {
-	var projectile = data["projectile"][i];
-	drawProjectile(projectile["x"],projectile["y"],context);
-	}
-	previousData = data;
+	    var projectile = data["projectile"][i];
+	    drawProjectile(projectile["x"],projectile["y"],context);
+	  }
+	  previousData = data;
 	}
 	function drawtable(data) {
 		$("#table").find("tr:gt(0)").remove();
 		for (i = 0; i < data["bot"].length; i++) {
 			$("#table").find('tbody')
-		.append($('<tr>')
-				.append($('<td>')
-						.html('<div class="coob" style="width:10px;height:10px;display:block;background-color:'+data["bot"][i]["color"]+ '"></div>')
-						)
-						.append($('<td>').text(data["bot"][i]["botName"]))
-								.append($('<td>').text(data["bot"][i]["score"]))
-										);
-										}
-									}
-									socket.on('board-update', function(jsonData){
-									updateGameState(jsonData);
-									drawtable(jsonData);
-									});
-					</script>
-				</body>
-			</html>
+			.append($('<tr>')
+			.append($('<td>')
+				.html('<div class="coob" style="width:10px;height:10px;display:block;background-color:'+data["bot"][i]["color"]+ '"></div>')
+				)
+				.append($('<td>').text(data["bot"][i]["botName"]))
+				.append($('<td>').text(data["bot"][i]["score"]))
+			);
+		}
+	}
+	socket.on('board-update', function(jsonData){
+	  updateGameState(jsonData);
+	  drawtable(jsonData);
+	});
+	socket.on('compile-error', function(message) {
+	  document.getElementById("compile-error").innerHTML = message;
+	});
+	</script>
+  </body>
+</html>
