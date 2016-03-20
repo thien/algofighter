@@ -9,7 +9,7 @@ var data = {
 };
 var clients = []
 var PI = Math.PI;
-cmndList = ['JMP', 'MVX', 'MVY', 'ROT', 'SHT','HLT','PSS', 'REG', 'IR0', 'ADD', 'SET', 'LOK']
+cmndList = ['JMP', 'MVX', 'MVY', 'ROT', 'SHT','HLT','PSS', 'REG', 'IR0', 'ADD', 'SET', 'LOK','MDR']
 
 function Bot(clientId, x, y, botName, code) {
     this.clientId = clientId;
@@ -124,6 +124,11 @@ function execAssembly(clientId, cmnd, val) {
 	      }
 	    }
 	    break;
+	case 12: //mdr
+	    var bot = getBot(clientId);
+	    bot["x"] += val*Math.sin(bot["angle"]);
+	    bot["y"] += val*Math.cos(bot["angle"]);
+	    break;
         default:
             console.log("Unrecognised Instruction: " + cmnd + " with val: " + val)
     }
@@ -172,7 +177,7 @@ function rotateBot(clientId, rad) {
 
 //Server goodness
 server.listen(port, function() {
-    console.log('Server listening at port %d', port);
+    console.log('Server listening athttp://52.49.29.249/ port %d', port);
 });
 
 //Routing
