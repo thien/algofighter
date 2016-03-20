@@ -9,7 +9,7 @@ var data = {
 };
 var clients = []
 var PI = Math.PI;
-cmndList = ['JMP', 'MVX', 'MVY', 'ROT', 'SHT']
+cmndList = ['JMP', 'MVX', 'MVY', 'ROT', 'SHT','HLT']
 
 function Bot(clientId, x, y, botName, code) {
     this.clientId = clientId;
@@ -30,7 +30,8 @@ function Bot(clientId, x, y, botName, code) {
 	  io.sockets.connected[clientId].emit('compile-error',"");
 	}
       } catch(err) {
-	io.sockets.connected[clientId].emit('compile-error',"Could not execute instruction at line "+this.pc);
+	console.log(code);
+	io.sockets.connected[clientId].emit('compile-error',"Could not execute instruction at or immediately after line "+this.pc);
 	this.pc = -2;
       }
     }
@@ -61,7 +62,7 @@ function validateList(input) {
         if (index != cmndList.length) {
             instructionList.push([parseInt(index), parseInt(params[1])])
         } else {
-            return false
+            instructionList.push(false);
         }
     }
     return instructionList;
@@ -71,7 +72,7 @@ function execAssembly(clientId, cmnd, val) {
     switch (cmnd) {
         case 0: //jmp
             var bot = getBot(clientId);
-            bot.pc = val;
+            bot.pc = val-1;
             break;
         case 1: //mvx
             moveBot(clientId, val, 0);
@@ -80,11 +81,15 @@ function execAssembly(clientId, cmnd, val) {
             moveBot(clientId, 0, val);
             break;
         case 3: //rot
-            rotateBot(clientId, val);
+            rotateBot(clientId, val/2*PI * 360);
             break;
-        case 4: //sht1
+        case 4: //sht
             botShoot(clientId);
             break;
+	case 5: //hlt
+	    var bot = getBot(clientId);
+            bot.pc = -2;
+	    break;
         default:
             console.log("Unrecognised Instruction: " + cmnd + " with val: " + val)
     }
@@ -207,25 +212,32 @@ io.on('connection', function(socket) {
     });
 });
 
+function updateProjectiles() {
+	for (i = 0; i < data["projectile"].length; i++) {
+  	//Updates positions of projectiles
+    data["projectile"][i]["x"] += 5*Math.cos(data["projectile"][i]["angle"]);
+    data["projectile"][i]["y"] += 5*Math.sin(data["projectile"][i]["angle"]);
+    //Deletes if they go off the screen
+    if ((data["projectile"][i]["x"] > 1000) || (data["projectile"][i]["x"] < 0) || (data["projectile"][i]["y"] < 0) || (data["projectile"][i]["y"] > 500))  {
+      data["projectile"].splice(i,1);
+    }
+    //for (j = 0; j < data["bot"].length; j++) {
+    //	if ((data["bot"][j]["x"]-5 < data["projectile"][i]["x"]) && data["projectile"][i]["x"]) < (data["bot"][j]["x"]+5)
+    //}
+  }
+}
+
 function updateBoardTick() {
-    // console.log(data);
-    for (i = 0; i < data["bot"].length; i++) {
-        botClientId = data["bot"][i]["clientId"];
-        if (data["bot"][i]["turnsTillShot"] > 0) {
-            data["bot"][i]["turnsTillShot"] -= 1;
-        }
-        //rotateBot(botClientId,0.1);
-        //botShoot(botClientId);
-        data["bot"][i].exec();
-    }
-    for (i = 0; i < data["projectile"].length; i++) {
-        data["projectile"][i]["x"] += 5 * Math.cos(data["projectile"][i]["angle"]);
-        data["projectile"][i]["y"] += 5 * Math.sin(data["projectile"][i]["angle"]);
-        if ((data["projectile"][i]["x"] > 1000) || (data["projectile"][i]["x"] < 0) || (data["projectile"][i]["y"] < 0) || (data["projectile"][i]["y"] > 500)) {
-            data["projectile"].splice(i, 1);
-        }
-    }
-    io.sockets.emit('board-update', data);
+  // console.log(data);
+  for (i = 0; i < data["bot"].length; i++) {
+      botClientId = data["bot"][i]["clientId"];
+      if (data["bot"][i]["turnsTillShot"] > 0) {
+	  data["bot"][i]["turnsTillShot"] -= 1;
+      }
+      data["bot"][i].exec();
+  }
+  updateProjectiles();
+  io.sockets.emit('board-update', data);
 }
 
 function randInt(min, max) {
