@@ -17,9 +17,49 @@
   margin: 0 auto;
 }
 .toploader {
-  width: 1220px;
-  margin: 20px,20px,20px,20px;
+  width: 1210px;
   display: block;
     margin-left: auto;
     margin-right: auto;
   }
+  // Mixin
+.clearfix() {
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+// Usage
+.container {
+  .clearfix();
+}
+// Mixin
+.center-block() {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Usage
+.container {
+  width: 940px;
+  .center-block();
+}
+// Mixin
+.text-overflow() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Usage
+.branch-name {
+  display: inline-block;
+  max-width: 200px;
+  .text-overflow();
+}
