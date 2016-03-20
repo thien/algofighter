@@ -124,12 +124,6 @@ io.on('connection', function(socket){
   clients.push(socket.id);
   socket.on('code submission', function(name,code){
     console.log("Creating new bot "+code);
-
-    // !!MAJOR SECURITY RISK!!
-    //tempString = "function codeFunc() {" + code + "}";
-    //console.log(tempString);
-    //eval(tempString);
-    //eval("function codeFunc() " + code);
     if (hasBot(socket.id)) {
       deleteBot(socket.id);
     }
@@ -151,8 +145,8 @@ function updateBoardTick() {
     rotateBot(botClientId,randInt(-20,20));
   }
   for (i = 0; i < data["projectile"].length; i++) {
-    data["projectile"][i]["x"] += 5*sin();
-    data["projectile"][i]["y"] +=
+    data["projectile"][i]["x"] += 5*sin(data["projectile"][i]["angle"]);
+    data["projectile"][i]["y"] += 5*cos(data["projectile"][i]["angle"]);
   }
   io.sockets.emit('board-update', data);
 }
