@@ -43,7 +43,6 @@ function rotateBot(clientId,degrees) {
 	} else if (data["bot"][i]["angle"] < 0) {
 	  data["bot"][i]["angle"] = data["bot"][i]["angle"] + 360;
 	}
-	console.log(data["bot"][i]["angle"]);
 	return true;
       }
       i++;
