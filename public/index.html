@@ -11,7 +11,6 @@
 		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="js/ace.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/assembly.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/main.js"></script>
 	</head>
@@ -60,9 +59,10 @@ JMP 1</div>
 	</div><!-- /.container -->
 	<script>
 	var editor1 = ace.edit("editor");
+	editor1.getSession().setUseWorker(false);
 	document.getElementById('editor').style.fontSize='16px';
 	editor1.getSession().setMode("ace/mode/javascript");
-	editor1.renderer.setShowGutter(false);
+	// editor1.renderer.setShowGutter(false);
 	context = document.getElementById('arena').getContext("2d");
 	var socket = io();
 	socket.emit('connection');
@@ -102,7 +102,7 @@ JMP 1</div>
 		$("#table").find("tr:gt(0)").remove();
 		for (i = 0; i < data["bot"].length; i++) {
 			$("#table").find('tbody')
-			.append($('<tr>')
+			.append($('<tr class="active">')
 			.append($('<td>')
 				.html('<div class="coob" style="width:10px;height:10px;display:block;background-color:'+data["bot"][i]["color"]+ '"></div>')
 				)
