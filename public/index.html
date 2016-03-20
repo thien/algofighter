@@ -61,6 +61,26 @@ function genRandomCode() {
 }
 genRandomCode();
 </script>
+<ul class="help-text">
+  <li><h3>Movement</h3></li>
+  <li>MVX distance - Move distance pixels to the right</li>
+  <li>MXY distance - Move distance pixels down</li>
+  <li>MDR distance - Move distance pixels forwards</li>
+  <li>ROT angle    - Move angle degrees clockwise</li>
+  <li><h3>Offense</h3></li>
+  <li>LOK          - Point towards a random enemy</li>
+  <li>SHT          - Shoot the gun</li>
+  <li><h3>Control</h3></li>
+  <li>HLT          - Halt execution</li>
+  <li>JMP address  - Jump to executing line address</li>
+  <li>PSS          - Do nothing for this turn</li>
+  <li><h3>Register</h3></li>
+  <li>Each bot has a single register that can store one value</li>
+  <li>SET vakue    - Set the register to be value</li>
+  <li>REG value    - Alias of SET</li>
+  <li>ADD value    - Add value to the register</li>
+  <li>IR0 address  - If the value of the register is zero, JMP to address</li>
+</ul>
 		</div>
 		</div>
 	</div>
