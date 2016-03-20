@@ -124,6 +124,7 @@ function execAssembly(clientId, cmnd, val) {
 	      } else {
 		bot.angle = angle + PI;
 	      }
+	      server.log(bot.angle);
 	    }
 	    break;
         default:
