@@ -1,0 +1,6 @@
+LOK
+SHT
+SHT
+SHT
+MDR 20
+JMP 0
