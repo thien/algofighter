@@ -5,6 +5,7 @@ var io = require('socket.io')(server);
 var port = process.env.PORT || 80;
 var data = {"bot":[],"projectile":[]};
 var clients = []
+var PI = Math.PI;
 
 function Bot (clientId,x,y,botName,code) {
     this.clientId = clientId;
