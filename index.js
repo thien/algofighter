@@ -31,7 +31,7 @@ function Bot(clientId, x, y, botName, code) {
 	  io.sockets.connected[clientId].emit('compile-error',"");
 	}
       } catch(err) {
-	console.log(code);
+	console.log(err);
 	io.sockets.connected[clientId].emit('compile-error',"Could not execute instruction at or immediately after line "+this.pc);
 	this.pc = -2;
       }
