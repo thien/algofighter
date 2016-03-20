@@ -224,14 +224,13 @@ function updateProjectiles() {
 }
 
 function updateBoardTick() {
-    // console.log(data);
-    for (i = 0; i < data["bot"].length; i++) {
-        botClientId = data["bot"][i]["clientId"];
-        if (data["bot"][i]["turnsTillShot"] > 0) {
-            data["bot"][i]["turnsTillShot"] -= 1;
-        }
-        data["bot"][i].exec();
-    }
+  // console.log(data);
+  for (i = 0; i < data["bot"].length; i++) {
+      botClientId = data["bot"][i]["clientId"];
+      if (data["bot"][i]["turnsTillShot"] > 0) {
+	  data["bot"][i]["turnsTillShot"] -= 1;
+      }
+      data["bot"][i].exec();
   }
   updateProjectiles();
   io.sockets.emit('board-update', data);
