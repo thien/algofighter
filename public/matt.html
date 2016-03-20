@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Algofighter</title>
+		<link rel="stylesheet" href="style.css">
+		<!-- Bootstrap goodness -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="js/ace.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/assembly.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body style="background-color:#ecf0f1">
+		<div style="display:none;">
+  <img id="source" src="http://i.imgur.com/0tULWto.png"
+       width="5" height="5">
+</div>
+		<div class="container">
+			<div class="starter-template">
+				<img class="logo" src="botthing.png" />
+			</div>
+			<div class="toploader">
+				<canvas id="arena" class="panel panel-default" width="1000px" height="500px"></canvas>
+				<table class="table" id="table">
+					<tr>
+						<th></th>
+						<th>Name</th>
+						<th>+</th>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<div class="toploader">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Input code
+			</div>
+			<form class="form-inline">
+				<div class="form-group">
+
+					<input type="text" class="form-control" id="bot-name" placeholder="Bot Name" value="">
+					<script>document.getElementById("bot-name").value = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);</script>
+					<button type="submit" class="btn btn-default btn-sm pull-right run-code">
+					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Run code
+					</button>
+				</div>
+				<div id="compile-error"></div>
+			</form>
+<div class="form-control" id="editor">
+</div>
+<script>
+function randInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+function genRandomCode() {
+  var moves = ["MVX 10","MVX -10","MVY 10","MVY -10","MVX 20","MVY 20","MVY -20","MVX -20","ROT 90", "ROT 45","ROT -45", "ROT -90", "ROT 180","SHT", "SHT","SHT", "SHT", "SHT", "SHT", "LOK", "LOK", "PSS"];
+  var moveString = "";
+  for (var i = 0; i < randInt(6,20); i++) {
+    moveString += moves[randInt(0,moves.length-1)] + "\n";
+  }
+  moveString += "JMP 0";
+  document.getElementById("editor").innerHTML = moveString;
+}
+genRandomCode();
+</script>
+
+
+  <div class="welle">
+    <ul class="help-text">
+  <li><h3>Movement</h3></li>
+  <li><code>MVX distance</code> Move distance pixels to the right</li>
+  <li><code>MVY distance</code> Move distance pixels down</li>
+  <li><code>MDR distance</code> Move distance pixels forwards</li>
+  <li><code>ROT angle</code> Move angle degrees clockwise</li>
+  <li><h3>Offense</h3></li>
+  <li><code>LOK</code> Point towards a random enemy</li>
+  <li><code>SHT</code> Shoot the gun</li>
+  <li><h3>Control</h3></li>
+  <li><code>HLT</code> Halt execution</li>
+  <li><code>JMP address</code> Jump to executing line address</li>
+  <li><code>PSS</code> Do nothing for this turn</li>
+  <li><h3>Register</h3></li>
+  <li>Each bot has a single register that can store one value.</li>
+  <li><code>SET value</code> Set the register to be value</li>
+  <li><code>REG value</code> Alias of SET</li>
+  <li><code>ADD value</code> Add value to the register</li>
+  <li><code>IR0 address</code> If the value of the register is zero, JMP to address</li>
+
+</ul>
+
+</div>
+
+		</div>
+		</div>
+	</div>
+	</div><!-- /.container -->
+	<script>
+
+	// $("#compile-error").css({
+	//   display: "none",
+	//   visibility: "hidden"
+	// });
+	$('.ace_gutter-cell ').first().addClass('active');
+	var editor1 = ace.edit("editor");
+	editor1.getSession().setUseWorker(false);
+	editor1.setOption("firstLineNumber", 0);
+	document.getElementById('editor').style.fontSize='16px';
+	editor1.getSession().setMode("ace/mode/javascript");
+	// editor1.renderer.setShowGutter(false);
+	context = document.getElementById('arena').getContext("2d");
+	var socket = io();
+	socket.emit('connection');
+	var previousData = {};
+	$('form').submit(function(){
+	  socket.emit('code submission', $('#bot-name').val(),editor1.getValue());
+	  return false;
+	});
+	function clearScreen(context) {
+	  context.clearRect (0,0,1000,500);
+	}
+	var image = document.getElementById("source");
+
+	function drawBot(bot,context) {
+		//context.fillStyle = bot["color"];
+		context.drawImage(image, bot["x"],bot["y"]);
+		//context.fillRect(bot["x"],bot["y"],9,9);
+		context.beginPath();
+		context.arc(bot["x"]+5+9*Math.sin(bot["angle"]), bot["y"]+5-9*Math.cos(bot["angle"]), 2, 0, 2*Math.PI);
+		context.stroke();
+	}
+	function drawProjectile(x,y,context,color) {
+		 // color = color.replace(/^#/, "");
+		 // color = parseInt(color, 10); + 50;
+		 // color = '#' + 'color';
+		context.fillStyle=color;
+		context.fillRect(x,y,2,2);
+		context.stroke();
+	}
+	function updateGameState(data) {
+	clearScreen(context);
+	for (var i = 0; i < data["bot"].length; i++) {
+	  var bot = data["bot"][i];
+	  drawBot(bot,context);
+	}
+	for (var i = 0; i < data["projectile"].length; i++) {
+	    var projectile = data["projectile"][i];
+	    drawProjectile(projectile["x"],projectile["y"],context,projectile["color"]);
+	  }
+	  previousData = data;
+	}
+	function drawtable(data) {
+		$("#table").find("tr:gt(0)").remove();
+		for (i = 0; i < data["bot"].length; i++) {
+			$("#table").find('tbody')
+			.append($('<tr>')
+			.append($('<td>')
+				.html('<div class="coob" style="width:10px;height:10px;display:block;background-color:'+data["bot"][i]["color"]+ '"></div>')
+				)
+				.append($('<td>').text(data["bot"][i]["botName"]))
+				.append($('<td>').text(data["bot"][i]["score"]))
+			);
+		}
+	}
+	socket.on('board-update', function(jsonData){
+	  updateGameState(jsonData);
+	  drawtable(jsonData);
+	});
+	socket.on('compile-error', function(message) {
+	  document.getElementById("compile-error").innerHTML = message;
+
+	});
+	</script>
+  </body>
+</html>
