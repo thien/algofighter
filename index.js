@@ -181,12 +181,12 @@ io.on('connection', function(socket){
   console.log('A user has connected');
   clients.push(socket.id);
   socket.on('code submission', function(name,code){
-    console.log("Creating new bot "+code);
     if (hasBot(socket.id)) {
       deleteBot(socket.id);
     }
     console.log("Creating new bot "+code);
     code = code.split("\n");
+    console.log(code);
     data["bot"].push(new Bot(socket.id,randInt(0,999),randInt(0,499),name,validateList(code)));
   });
   socket.on('disconnect', function(){
