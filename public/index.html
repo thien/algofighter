@@ -12,6 +12,7 @@
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="js/ace.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/assembly.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/main.js"></script>
 	</head>
 	<body>
@@ -44,14 +45,19 @@
 					</button>
 				</div>
 			</form>
-			<div id="editor" >
-			var yellow = 9;</div>
+<div id="editor">
+MV 10
+RT 90
+SH
+JM 1
+</div>
 		</div>
 		</div>
 	</div>
 	</div><!-- /.container -->
 	<script>
 	var editor1 = ace.edit("editor");
+	editor1.getSession().setMode("ace/mode/javascript");
 	editor1.getSession().setMode("ace/mode/javascript");
 	context = document.getElementById('arena').getContext("2d");
 	var socket = io();
