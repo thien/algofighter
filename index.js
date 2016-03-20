@@ -65,7 +65,7 @@ function validateList(input) {
         if (index != cmndList.length) {
             instructionList.push([parseInt(index), parseInt(params[1])])
         } else {
-            return false
+            instructionList.push(false);
         }
     }
     return instructionList;
