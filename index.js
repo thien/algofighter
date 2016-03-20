@@ -99,7 +99,7 @@ function execAssembly(clientId, cmnd, val) {
 	    break;
 	case 8: //ir0
 	    var bot = getBot(clientId);
-	    if (bot.reg = 0) {
+	    if (bot.reg == 0) {
 	      bot.pc = val-1;
 	    }
 	    break;
