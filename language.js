@@ -1,4 +1,4 @@
-cmndList = ['JMP', 'MOV', 'RTN', 'SHT']
+cmndList = ['JMP', 'MOV', 'ROT', 'SHT']
 instructionList = []
 
 function indexCommand(inputCmnd) {
@@ -24,13 +24,28 @@ function validateList(input) {
 	return true
 }
 
-function execAssembly() {
-	return true
+function execAssembly(cmnd, val) {
+	switch (cmnd) {
+		case 0:
+			jmp(val)
+			break;
+		case 1:
+			mov(val)
+			break;
+		case 2:
+			rot(val)
+			break;
+		case 3:
+			shoot()
+			break;
+		default:
+			console.log("PANIC!")
+	}
 }
 
 testScript = []
 testScript.push("MOV 10")
-testScript.push("RTN 90")
+testScript.push("ROT 90")
 testScript.push("SHT")
 testScript.push("JMP 1")
 console.log(validateList(testScript))
