@@ -9,7 +9,7 @@ var data = {
 };
 var clients = []
 var PI = Math.PI;
-cmndList = ['JMP', 'MVX', 'MVY', 'ROT', 'SHT','HLT']
+cmndList = ['JMP', 'MVX', 'MVY', 'ROT', 'SHT','HLT','PSS']
 
 function Bot(clientId, x, y, botName, code) {
     this.clientId = clientId;
@@ -89,6 +89,8 @@ function execAssembly(clientId, cmnd, val) {
 	case 5: //hlt
 	    var bot = getBot(clientId);
             bot.pc = -2;
+	    break;
+	case 6: //pss
 	    break;
         default:
             console.log("Unrecognised Instruction: " + cmnd + " with val: " + val)
