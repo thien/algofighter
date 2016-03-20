@@ -9,7 +9,7 @@ var data = {
 };
 var clients = []
 var PI = Math.PI;
-cmndList = ['JMP', 'MVX', 'MVY', 'ROT', 'SHT','HLT','PSS', 'REG', 'IR0', 'ADD', 'SET']
+cmndList = ['JMP', 'MVX', 'MVY', 'ROT', 'SHT','HLT','PSS', 'REG', 'IR0', 'ADD', 'SET', 'LOK']
 
 function Bot(clientId, x, y, botName, code) {
     this.clientId = clientId;
@@ -31,7 +31,7 @@ function Bot(clientId, x, y, botName, code) {
 	  io.sockets.connected[clientId].emit('compile-error',"");
 	}
       } catch(err) {
-	console.log(code);
+	console.log(err);
 	io.sockets.connected[clientId].emit('compile-error',"Could not execute instruction at or immediately after line "+this.pc);
 	this.pc = -2;
       }
@@ -110,6 +110,13 @@ function execAssembly(clientId, cmnd, val) {
 	case 10: //set
 	    var bot = getBot(clientId);
 	    bot.reg = val;
+	    break;
+	case 11: //lok
+	    var bot = getBot(clientId);
+	    var randomBot = getBot(data["bot"][randInt(0,data["bot"].length-1)]["clientId"]);
+	    var angle = Math.atan((randomBot["x"]-bot["x"])/(randomBot["y"]-bot["y"]));
+	    console.log(angle);
+	    bot.angle = angle;
 	    break;
         default:
             console.log("Unrecognised Instruction: " + cmnd + " with val: " + val)
