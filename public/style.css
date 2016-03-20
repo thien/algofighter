@@ -29,16 +29,17 @@ body {
 pre {
   font-family: 'Courier New', Monospace;
 }
-.help-text {
-  float: left;
+.well {
   height: 600px;
-  list-style-type: '';
+  overflow-y: scroll;
 }
-
 .help-text pre {
   padding: 3px;
   margin-bottom: 0px;
   margin-top: 3px;
+}
+.help-text li {
+    list-style-type: none;
 }
 #table {
   width:200px;
