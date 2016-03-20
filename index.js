@@ -20,6 +20,7 @@ function Bot (clientId,x,y,botName,code) {
     this.turnsTillShot = 5;
     this.pc = 0; //program counter
     this.exec = function () {
+      console.log(this.code);
       execAssembly(this.clientId,this.code[this.pc][0],this.code[this.pc][1]);
       this.pc++;
     }
@@ -71,7 +72,8 @@ function execAssembly(clientId,cmnd, val) {
 		case 3: //rot
 			rotateBot(clientId,val);
 			break;
-		case 4: //sht
+		case 4: //sht1
+5
 			botShoot(clientId)
 			break;
 		default:
