@@ -127,7 +127,7 @@ function execAssembly(clientId, cmnd, val) {
 	case 12: //mdr
 	    var bot = getBot(clientId);
 	    bot["x"] += val*Math.sin(bot["angle"]);
-	    bot["y"] += val*Math.cos(bot["angle"]);
+	    bot["y"] -= val*Math.cos(bot["angle"]);
 	    break;
         default:
             console.log("Unrecognised Instruction: " + cmnd + " with val: " + val)
