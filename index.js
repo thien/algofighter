@@ -143,6 +143,9 @@ function updateBoardTick() {
     botClientId = data["bot"][i]["clientId"];
     moveBot(botClientId,randInt(-10,10),randInt(-10,10));
     rotateBot(botClientId,randInt(-20,20));
+    if (randInt(0,2) == 1) {
+      botShoot(botClientId);
+    }
   }
   for (i = 0; i < data["projectile"].length; i++) {
     data["projectile"][i]["x"] += 5*sin(data["projectile"][i]["angle"]);
