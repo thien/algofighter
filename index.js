@@ -2,10 +2,13 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
+var parser = require("language");
+eval(parser.readFileSync('language.js')+'');
 var port = process.env.PORT || 80;
 var data = {"bot":[],"projectile":[]};
 var clients = []
 var PI = Math.PI;
+cmndList = ['JMP', 'MOV', 'ROT', 'SHT']
 
 function Bot (clientId,x,y,botName,code) {
     this.clientId = clientId;
@@ -26,6 +29,50 @@ function Projectile(clientId,x,y,angle) {
     this.y = y;
     this.angle = angle;
 }
+
+function indexCommand(inputCmnd) {
+	for (validCmnd in cmndList) {
+		if (cmndList[validCmnd] == inputCmnd) {
+			return validCmnd
+		}
+	}
+	return cmndList.length
+}
+
+function validateList(input) {
+	instructionList = [];
+	for (line in input) {
+		var params = input[line].split(" ")
+		var index = indexCommand(params[0])
+		console.log(index)
+		if (index != cmndList.length) {
+			instructionList.push([index, parseInt(params[1])])
+		} else {
+			return false
+		}
+	}
+	return instructionList;
+}
+
+function execAssembly(cmnd, val) {
+	switch (cmnd) {
+		case 0:
+			jmp(val)
+			break;
+		case 1:
+			mov(val)
+			break;
+		case 2:
+			rot(val)
+			break;
+		case 3:
+			shoot()
+			break;
+		default:
+			console.log("PANIC!")
+	}
+}
+
 
 function botShoot(clientId) {
   var bot = getBot(clientId);
