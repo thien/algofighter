@@ -119,12 +119,7 @@ function execAssembly(clientId, cmnd, val) {
 		randomBot = getBot(data["bot"][randInt(0,data["bot"].length-1)]["clientId"]);
 	      }
 	      var angle = Math.atan((-randomBot["x"]+bot["x"])/(randomBot["y"]-bot["y"]));
-	      if ((angle < PI) && (angle > -PI)) {
-		bot.angle = angle + PI;
-	      } else {
-		bot.angle = angle;
-	      }
-	      console.log(bot.angle);
+	      bot.angle = angle;
 	    }
 	    break;
         default:
