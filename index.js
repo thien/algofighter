@@ -59,7 +59,6 @@ function validateList(input) {
     for (line in input) {
         var params = input[line].split(" ")
         var index = indexCommand(params[0])
-        console.log(index)
         if (index != cmndList.length) {
             instructionList.push([parseInt(index), parseInt(params[1])])
         } else {
@@ -246,9 +245,8 @@ io.on('connection', function(socket) {
         if (hasBot(socket.id)) {
             deleteBot(socket.id);
         }
-        console.log("Creating new bot " + code);
+        console.log("Creating new bot " + name);
         code = code.split("\n");
-        console.log(code);
         data["bot"].push(new Bot(socket.id, randInt(0, 999), randInt(0, 499), name, validateList(code)));
     });
     socket.on('disconnect', function() {
@@ -287,7 +285,6 @@ function updateCollisions() {
 }
 
 function updateBoardTick() {
-  // console.log(data);
   for (i = 0; i < data["bot"].length; i++) {
       botClientId = data["bot"][i]["clientId"];
       if (data["bot"][i]["turnsTillShot"] > 0) {
