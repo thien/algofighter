@@ -273,8 +273,8 @@ function updateProjectiles() {
 function updateCollisions() {
 	for (i = 0; i < data["projectile"].length; i++) {
 		for (j = 0; j < data["bot"].length; j++) {
-    		if ((data["bot"][j]["x"]-5 < data["projectile"][i]["x"]) && ((data["projectile"][i]["x"]) < (data["bot"][j]["x"]+5))
-    		&&  (data["bot"][j]["y"]-5 < data["projectile"][i]["y"]) && ((data["projectile"][i]["y"]) < (data["bot"][j]["y"]+5))
+    		if ((data["bot"][j]["x"]-6 < data["projectile"][i]["x"]) && ((data["projectile"][i]["x"]) < (data["bot"][j]["x"]+6))
+    		&&  (data["bot"][j]["y"]-6 < data["projectile"][i]["y"]) && ((data["projectile"][i]["y"]) < (data["bot"][j]["y"]+6))
     		&& 	(data["bot"][j]["clientId"] != data["projectile"][i]["clientId"])) {
 			if (hasBot(data["projectile"][i]["clientId"])) {
 			  data["bot"][getBotIndex(data["projectile"][i]["clientId"])]["score"] += 1 + data["bot"][j]["score"]    
