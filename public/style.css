@@ -9,8 +9,8 @@
   min-width: 800px;
   height: 400px;
     margin: 0 auto;
+    margin-bottom: 4px;
 }
-
 #table {
   width:200px;
   float: right;
@@ -23,44 +23,25 @@
     margin-left: auto;
     margin-right: auto;
   }
-  // Mixin
-.clearfix() {
-  &:before,
-  &:after {
-    content: " ";
-    display: table;
-  }
-  &:after {
-    clear: both;
-  }
-}
-
-// Usage
 .container {
-  .clearfix();
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
-// Mixin
-.center-block() {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+.form-inline{
+      margin-top: 30px;
+     margin-bottom: 30px;
+     margin-left: 30px;
+     margin-right: 30px;
 }
-
-// Usage
-.container {
-  width: 940px;
-  .center-block();
+input, button {
+  height: 34px;
+  margin-left: 5px;
+  float: left;
 }
-// Mixin
-.text-overflow() {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-// Usage
-.branch-name {
-  display: inline-block;
-  max-width: 200px;
-  .text-overflow();
+#compile-error {
+  float:right;
+  padding-top: 14px;
+  font-family: "Monaco", Serif;
+  font-size: 12px;
+  color: #d9534f;
 }
