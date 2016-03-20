@@ -219,7 +219,7 @@ function updateProjectiles() {
     }
     //for (j = 0; j < data["bot"].length; j++) {
     //	if ((data["bot"][j]["x"]-5 < data["projectile"][i]["x"]) && data["projectile"][i]["x"]) < (data["bot"][j]["x"]+5)
-    }
+    //}
   }
 }
 
