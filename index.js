@@ -23,10 +23,10 @@ function moveBot(clientId,distanceX,distanceY) {
   while (i < data["bot"].length) {
     if (data["bot"][i]["clientId"] == clientId) {
       if ((data["bot"][i]["x"] + distanceX < 1000) && (data["bot"][i]["x"] + distanceX > 0)) {
-	data["bot"][i]["x"] += distanceX;
+  data["bot"][i]["x"] += distanceX;
       }
       if ((data["bot"][i]["y"] + distanceY < 500) && (data["bot"][i]["y"] + distanceY > 0)) {
-	data["bot"][i]["y"] += distanceY;
+  data["bot"][i]["y"] += distanceY;
       }
       return true;
     }
@@ -38,13 +38,13 @@ function rotateBot(clientId,degrees) {
   var i = 0;
   while (i < data["bot"].length) {
       if (data["bot"][i]["clientId"] == clientId) {
-	data["bot"][i]["angle"] = data["bot"][i]["angle"] + degrees;
-	if (data["bot"][i]["angle"] >= 360) {
-	  data["bot"][i]["angle"] = data["bot"][i]["angle"] - 360;
-	} else if (data["bot"][i]["angle"] < 0) {
-	  data["bot"][i]["angle"] = data["bot"][i]["angle"] + 360;
-	}
-	return true;
+  data["bot"][i]["angle"] = data["bot"][i]["angle"] + degrees;
+  if (data["bot"][i]["angle"] >= 360) {
+    data["bot"][i]["angle"] = data["bot"][i]["angle"] - 360;
+  } else if (data["bot"][i]["angle"] < 0) {
+    data["bot"][i]["angle"] = data["bot"][i]["angle"] + 360;
+  }
+  return true;
       }
       i++;
   }
