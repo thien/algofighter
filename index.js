@@ -112,11 +112,15 @@ function execAssembly(clientId, cmnd, val) {
 	    bot.reg = val;
 	    break;
 	case 11: //lok
-	    var bot = getBot(clientId);
-	    var randomBot = getBot(data["bot"][randInt(0,data["bot"].length-1)]["clientId"]);
-	    var angle = Math.atan((randomBot["x"]-bot["x"])/(randomBot["y"]-bot["y"]));
-	    console.log(angle);
-	    bot.angle = angle;
+	    if (data["bot"].length > 1) {
+	      var bot = getBot(clientId);
+	      var randomBot = bot;
+	      while (randomBot == bot) {
+		randomBot = getBot(data["bot"][randInt(0,data["bot"].length-1)]["clientId"]);
+	      }
+	      var angle = Math.atan((randomBot["x"]-bot["x"])/(randomBot["y"]-bot["y"]));
+	      bot.angle = angle+PI/2;
+	    }
 	    break;
         default:
             console.log("Unrecognised Instruction: " + cmnd + " with val: " + val)
