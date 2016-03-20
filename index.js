@@ -143,7 +143,7 @@ function updateBoardTick() {
   for (i = 0; i < data["bot"].length; i++) {
     botClientId = data["bot"][i]["clientId"];
     moveBot(botClientId,randInt(-10,10),randInt(-10,10));
-    rotateBot(botClientId,randInt(-20,20));
+    rotateBot(botClientId,0.1);
     if (randInt(0,2) == 1) {
       botShoot(botClientId);
     }
