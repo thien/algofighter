@@ -16,11 +16,13 @@ pre {
 .help-text {
   float: left;
   height: 600px;
-  list-style-type: 'none';
+  list-style-type: '';
 }
 
 .help-text pre {
   padding: 3px;
+  margin-bottom: 0px;
+  margin-top: 3px;
 }
 #table {
   width:200px;
