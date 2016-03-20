@@ -51,8 +51,8 @@
 	</div>
 	</div><!-- /.container -->
 	<script>
-			var editor1 = ace.edit("editor");
-			editor1.getSession().setMode("ace/mode/javascript");
+	var editor1 = ace.edit("editor");
+	editor1.getSession().setMode("ace/mode/javascript");
 	context = document.getElementById('arena').getContext("2d");
 	var socket = io();
 	socket.emit('connection');
