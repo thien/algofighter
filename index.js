@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-var port = process.env.PORT || 80;
+var port = process.env.PORT || 8000;
 var data = {"bot":[],"projectile":[]};
 var clients = []
 var PI = Math.PI;
@@ -21,9 +21,9 @@ function Bot (clientId,x,y,botName,code) {
     this.pc = 0; //program counter
     this.exec = function () {
       console.log(this.code);
-      console.log(this.code[this.pc]);
+      console.log(this.pc);
       execAssembly(this.clientId,this.code[this.pc][0],this.code[this.pc][1]);
-      this.pc++;
+      this.pc+= 1;
     }
 }
 
@@ -50,7 +50,7 @@ function validateList(input) {
 		var index = indexCommand(params[0])
 		console.log(index)
 		if (index != cmndList.length) {
-			instructionList.push([index, parseInt(params[1])])
+			instructionList.push([parseInt(index), parseInt(params[1])])
 		} else {
 			return false
 		}
@@ -74,8 +74,7 @@ function execAssembly(clientId,cmnd, val) {
 			rotateBot(clientId,val);
 			break;
 		case 4: //sht1
-5
-			botShoot(clientId)
+			botShoot(clientId);
 			break;
 		default:
 			console.log("Unrecognised Instruction: "+cmnd+" with val: "+val)
