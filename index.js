@@ -21,10 +21,10 @@ function moveBot(clientId,distanceX,distanceY) {
   var i = 0;
   while (i < data["bot"].length) {
     if (data["bot"][i]["clientId"] == clientId) {
-      if ((data["bot"][i]["x"] + distanceX < 1000) || (data["bot"][i]["x"] + distanceX > 0)) {
+      if ((data["bot"][i]["x"] + distanceX < 1000) && (data["bot"][i]["x"] + distanceX > 0)) {
 	data["bot"][i]["x"] += distanceX;
       }
-      if ((data["bot"][i]["y"] + distanceY < 500) || (data["bot"][i]["y"] + distanceY > 0)) {
+      if ((data["bot"][i]["y"] + distanceY < 500) && (data["bot"][i]["y"] + distanceY > 0)) {
 	data["bot"][i]["y"] += distanceY;
       }
       return true;
@@ -34,18 +34,14 @@ function moveBot(clientId,distanceX,distanceY) {
 }
 
 function rotateBot(clientId,degrees) {
-  console.log(degrees);
   var i = 0;
   while (i < data["bot"].length) {
       if (data["bot"][i]["clientId"] == clientId) {
-	if (data["bot"][i]["angle"] + degrees < 360) {
-	  if (data["bot"][i]["angle"] + degrees > 0) {
-	    data["bot"][i]["angle"] = data["bot"][i]["angle"] + degrees;
-	  } else {
-	    data["bot"][i]["angle"] = 360 - (data["bot"][i]["angle"]+degrees);
-	  }
-	} else {
-	  data["bot"][i]["angle"] = 0 + (data["bot"][i]["angle"]+degrees);
+	data["bot"][i]["angle"] = data["bot"][i]["angle"] + degrees;
+	if (data["bot"][i]["angle"] >= 360) {
+	  data["bot"][i]["angle"] = data["bot"][i]["angle"] - 360;
+	} else if (data["bot"][i]["angle"] < 0) {
+	  data["bot"][i]["angle"] = data["bot"][i]["angle"] + 360;
 	}
 	console.log(data["bot"][i]["angle"]);
 	return true;
@@ -129,7 +125,7 @@ function updateBoardTick() {
   for (i = 0; i < data["bot"].length; i++) {
     botClientId = data["bot"][i]["clientId"];
     moveBot(botClientId,randInt(-10,10),randInt(-10,10));
-    rotateBot(botClientId,randInt(-10,10));
+    rotateBot(botClientId,randInt(-20,20));
   }
   io.sockets.emit('board-update', data);
 }
