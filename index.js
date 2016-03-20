@@ -14,7 +14,6 @@ function Bot (clientId,x,y,botName,code) {
     this.x = x;
     this.y = y;
     this.angle = 0;
-    //this.code = codeFunc;
     this.code = code;
     this.color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
     this.score = 0;
@@ -22,6 +21,7 @@ function Bot (clientId,x,y,botName,code) {
     this.pc = 0; //program counter
     this.exec = function () {
       execAssembly(this.clientId,this.code[this.pc][0],this.code[this.pc][1]);
+      this.pc++;
     }
 }
 
@@ -35,7 +35,7 @@ function Projectile(clientId,x,y,angle) {
 function indexCommand(inputCmnd) {
 	for (validCmnd in cmndList) {
 		if (cmndList[validCmnd] == inputCmnd) {
-			return validCmnd
+			return validCmnd;
 		}
 	}
 	return cmndList.length
@@ -186,7 +186,7 @@ io.on('connection', function(socket){
       deleteBot(socket.id);
     }
     console.log("Creating new bot "+code);
-    data["bot"].push(new Bot(socket.id,randInt(0,999),randInt(0,499),name,code));
+    data["bot"].push(new Bot(socket.id,randInt(0,999),randInt(0,499),name,validateInput(code)));
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');
