@@ -9,7 +9,7 @@ var data = {
 };
 var clients = []
 var PI = Math.PI;
-cmndList = ['JMP', 'MVX', 'MVY', 'ROT', 'SHT','HLT','PSS', 'REG', 'IR0', 'ADD', 'SET']
+cmndList = ['JMP', 'MVX', 'MVY', 'ROT', 'SHT','HLT','PSS', 'REG', 'IR0', 'ADD', 'SET', 'LOK']
 
 function Bot(clientId, x, y, botName, code) {
     this.clientId = clientId;
@@ -110,6 +110,12 @@ function execAssembly(clientId, cmnd, val) {
 	case 10: //set
 	    var bot = getBot(clientId);
 	    bot.reg = val;
+	    break;
+	case 11: //lok
+	    var bot = getBot(clientId);
+	    var randomBot = getBot(data["bot"][randInt(0,data["bot"].length)]["clientId"]);
+	    var angle = Math.arctan((randomBot["x"]-bot["x"])/(randomBot["y"]-bot["y"]));
+	    bot.angle = angle;
 	    break;
         default:
             console.log("Unrecognised Instruction: " + cmnd + " with val: " + val)
