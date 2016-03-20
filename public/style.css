@@ -24,14 +24,15 @@ body {
   max-width: 50%;
   height: 600px;
   float: left;
-    margin-bottom: 4px;
+    margin-left: 10px;
+    margin-bottom: 14px;
 }
 pre {
   font-family: 'Courier New', Monospace;
 }
 .welle {
-  height: 600px;
-  overflow-y: scroll;
+  height: 610px;
+  overflow:hidden;
 }
 .help-text pre {
   padding: 3px;
