@@ -63,6 +63,7 @@ JMP 1</div>
 
 	var editor1 = ace.edit("editor");
 	editor1.getSession().setUseWorker(false);
+	editor1.setOption("firstLineNumber", 0);
 	document.getElementById('editor').style.fontSize='16px';
 	editor1.getSession().setMode("ace/mode/javascript");
 	// editor1.renderer.setShowGutter(false);
