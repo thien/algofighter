@@ -82,7 +82,7 @@ function execAssembly(clientId, cmnd, val) {
             moveBot(clientId, 0, val);
             break;
         case 3: //rot
-            rotateBot(clientId, val);
+            rotateBot(clientId, val/2*PI * 360);
             break;
         case 4: //sht
             botShoot(clientId);
