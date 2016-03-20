@@ -194,6 +194,17 @@ function getBot(clientId) {
     return false;
 }
 
+function getBotIndex(clientId) {
+    var i = 0;
+    while (i < data["bot"].length) {
+        if (data["bot"][i]["clientId"] == clientId) {
+            return i;
+        }
+        i++;
+    }
+    return false;
+}
+
 //Socket Goodness
 io.on('connection', function(socket) {
     console.log('A user has connected');
@@ -232,8 +243,10 @@ function updateCollisions() {
     		if ((data["bot"][j]["x"]-5 < data["projectile"][i]["x"]) && ((data["projectile"][i]["x"]) < (data["bot"][j]["x"]+5))
     		&&  (data["bot"][j]["y"]-5 < data["projectile"][i]["y"]) && ((data["projectile"][i]["y"]) < (data["bot"][j]["y"]+5))
     		&& 	(data["bot"][j]["clientId"] != data["projectile"][i]["clientId"])) {
+
+				data["bot"][getBotIndex(data["projectile"][i]["clientId"])]["score"] += 1 + data["bot"][j]["score"]    		
     			data["projectile"].splice(i,1);
-    			data["bot"].splice(j,1);
+    			data["bot"].splice(j,1);    			
     		}
     	}
 	}
