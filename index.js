@@ -22,11 +22,13 @@ function Bot(clientId, x, y, botName, code) {
     this.score = 0;
     this.turnsTillShot = 5;
     this.pc = 0; //program counter
-    this.exec = function() {
-        console.log(this.code);
-        console.log(this.pc);
-        execAssembly(this.clientId, this.code[this.pc][0], this.code[this.pc][1]);
-        this.pc += 1;
+    this.exec = function () {
+      try {
+	execAssembly(this.clientId,this.code[this.pc][0],this.code[this.pc][1]);
+      } catch(err) {
+	io.sockets.connected[clientId].emit('compile-error',err.message);
+      }
+      this.pc+= 1;
     }
 }
 
