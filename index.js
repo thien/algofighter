@@ -17,6 +17,18 @@ function Bot (clientId,x,y,botName,code) {
     this.color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
 }
 
+function Projectile(clientId,x,y,angle) {
+    this.clientId = clientId;
+    this.x = x;
+    this.y = y;
+    this.angle = angle;
+}
+
+function botShoot(clientId) {
+  var bot = getBot(clientId);
+  data["projectile"].append(new Projectile(clientId,bot["x"],bot["y"],bot["angle"]));
+}
+
 function moveBot(clientId,distanceX,distanceY) {
   var i = 0;
   while (i < data["bot"].length) {
@@ -33,15 +45,15 @@ function moveBot(clientId,distanceX,distanceY) {
   }  
 }
 
-function rotateBot(clientId,degrees) {
+function rotateBot(clientId,rad) {
   var i = 0;
   while (i < data["bot"].length) {
       if (data["bot"][i]["clientId"] == clientId) {
-	data["bot"][i]["angle"] = data["bot"][i]["angle"] + degrees;
-	if (data["bot"][i]["angle"] >= 360) {
-	  data["bot"][i]["angle"] = data["bot"][i]["angle"] - 360;
+	data["bot"][i]["angle"] = data["bot"][i]["angle"] + rad;
+	if (data["bot"][i]["angle"] >= 2*PI) {
+	  data["bot"][i]["angle"] = data["bot"][i]["angle"] - 2*PI;
 	} else if (data["bot"][i]["angle"] < 0) {
-	  data["bot"][i]["angle"] = data["bot"][i]["angle"] + 360;
+	  data["bot"][i]["angle"] = data["bot"][i]["angle"] + 2*PI;
 	}
 	return true;
       }
@@ -94,6 +106,17 @@ function hasBot(clientId) {
   return false;
 }
 
+function getBot(clientId) {
+  var i = 0;
+  while (i < data["bot"].length) {
+    if (data["bot"][i]["clientId"] == clientId) {
+      return data["bot"][i];
+    }
+    i++;
+  }
+  return false;
+}
+
 //Socket Goodness
 io.on('connection', function(socket){
   console.log('A user has connected');
@@ -125,6 +148,10 @@ function updateBoardTick() {
     botClientId = data["bot"][i]["clientId"];
     moveBot(botClientId,randInt(-10,10),randInt(-10,10));
     rotateBot(botClientId,randInt(-20,20));
+  }
+  for (i = 0; i < data["projectile"].length; i++) {
+    data["projectile"][i]["x"] += 5*sin();
+    data["projectile"][i]["y"] +=
   }
   io.sockets.emit('board-update', data);
 }
