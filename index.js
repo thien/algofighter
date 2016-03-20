@@ -200,6 +200,21 @@ io.on('connection', function(socket){
   });
 });
 
+function updateProjectiles() {
+	for (i = 0; i < data["projectile"].length; i++) {
+  	//Updates positions of projectiles
+    data["projectile"][i]["x"] += 5*Math.cos(data["projectile"][i]["angle"]);
+    data["projectile"][i]["y"] += 5*Math.sin(data["projectile"][i]["angle"]);
+    //Deletes if they go off the screen
+    if ((data["projectile"][i]["x"] > 1000) || (data["projectile"][i]["x"] < 0) || (data["projectile"][i]["y"] < 0) || (data["projectile"][i]["y"] > 500))  {
+      data["projectile"].splice(i,1);
+    }
+    for (j = 0; j < data["bot"].length; j++) {
+    	
+    }
+  }
+}
+
 function updateBoardTick() {
   // console.log(data);
   for (i = 0; i < data["bot"].length; i++) {
@@ -211,13 +226,7 @@ function updateBoardTick() {
     //botShoot(botClientId);
     data["bot"][i].exec();
   }
-  for (i = 0; i < data["projectile"].length; i++) {
-    data["projectile"][i]["x"] += 5*Math.cos(data["projectile"][i]["angle"]);
-    data["projectile"][i]["y"] += 5*Math.sin(data["projectile"][i]["angle"]);
-    if ((data["projectile"][i]["x"] > 1000) || (data["projectile"][i]["x"] < 0) || (data["projectile"][i]["y"] < 0) || (data["projectile"][i]["y"] > 500))  {
-      data["projectile"].splice(i,1);
-    }
-  }
+  updateProjectiles();
   io.sockets.emit('board-update', data);
 }
 
