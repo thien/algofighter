@@ -30,6 +30,7 @@ function Bot(clientId, x, y, botName, code) {
 	  io.sockets.connected[clientId].emit('compile-error',"");
 	}
       } catch(err) {
+	console.log(code);
 	if (code === false) {
 	} else {
 	  io.sockets.connected[clientId].emit('compile-error',"Could not execute instruction at line "+this.pc);
