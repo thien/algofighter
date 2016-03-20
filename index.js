@@ -9,7 +9,7 @@ var data = {
 };
 var clients = []
 var PI = Math.PI;
-cmndList = ['JMP', 'MVX', 'MVY', 'ROT', 'SHT','HLT','PSS']
+cmndList = ['JMP', 'MVX', 'MVY', 'ROT', 'SHT','HLT','PSS', 'REG', 'IR0', 'ADD', 'SET']
 
 function Bot(clientId, x, y, botName, code) {
     this.clientId = clientId;
@@ -22,6 +22,7 @@ function Bot(clientId, x, y, botName, code) {
     this.score = 0;
     this.turnsTillShot = 5;
     this.pc = 0; //program counter
+    this.reg = 0;
     this.exec = function () {
       try {
 	if (this.pc > -1) {
@@ -91,6 +92,24 @@ function execAssembly(clientId, cmnd, val) {
             bot.pc = -2;
 	    break;
 	case 6: //pss
+	    break;
+	case 7: //reg
+	    var bot = getBot(clientId);
+	    bot.reg = val;
+	    break;
+	case 8: //ir0
+	    var bot = getBot(clientId);
+	    if (bot.reg = 0) {
+	      bot.pc = val-1;
+	    }
+	    break;
+	case 9: //add
+	    var bot = getBot(clientId);
+	    bot.reg += val;
+	    break;
+	case 10: //set
+	    var bot = getBot(clientId);
+	    bot.reg = val;
 	    break;
         default:
             console.log("Unrecognised Instruction: " + cmnd + " with val: " + val)
