@@ -152,7 +152,7 @@ function updateBoardTick() {
   }
   for (i = 0; i < data["projectile"].length; i++) {
     data["projectile"][i]["x"] += 5*sin();
-    data["projectile"][i]["y"] +=
+    data["projectile"][i]["y"] += 5*cos();
   }
   io.sockets.emit('board-update', data);
 }

@@ -16,7 +16,7 @@
     display: block;
   margin: 0 auto;
 }
-#toploader {
+.toploader {
   width: 1220px;
   margin: 20px,20px,20px,20px;
   display: block;
