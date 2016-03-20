@@ -113,7 +113,7 @@ function execAssembly(clientId, cmnd, val) {
 	    break;
 	case 11: //lok
 	    var bot = getBot(clientId);
-	    var randomBot = getBot(data["bot"][randInt(0,data["bot"].length)]["clientId"]);
+	    var randomBot = getBot(data["bot"][randInt(0,data["bot"].length-1)]["clientId"]);
 	    var angle = Math.arctan((randomBot["x"]-bot["x"])/(randomBot["y"]-bot["y"]));
 	    console.log(angle);
 	    bot.angle = angle;
