@@ -21,7 +21,7 @@ function Bot(clientId, x, y, botName, code) {
     this.color = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
     this.score = 0;
     this.turnsTillShot = 5;
-    this.pc = -1; //program counter
+    this.pc = 0; //program counter
     this.exec = function () {
       try {
 	if (this.pc > -1) {
