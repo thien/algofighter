@@ -34,12 +34,13 @@ function moveBot(clientId,distanceX,distanceY) {
 }
 
 function rotateBot(clientId,degrees) {
+  console.log(degrees);
   var i = 0;
   while (i < data["bot"].length) {
       if (data["bot"][i]["clientId"] == clientId) {
 	if (data["bot"][i]["angle"] + degrees < 360) {
 	  if (data["bot"][i]["angle"] + degrees > 0) {
-	    data["bot"][i]["angle"] += degrees;
+	    data["bot"][i]["angle"] = data["bot"][i]["angle"] + degrees;
 	  } else {
 	    data["bot"][i]["angle"] = 360 - (data["bot"][i]["angle"]+degrees);
 	  }
