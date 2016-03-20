@@ -9,7 +9,7 @@ var data = {
 };
 var clients = []
 var PI = Math.PI;
-cmndList = ['JMP', 'MVX', 'MVY', 'ROT', 'SHT']
+cmndList = ['JMP', 'MVX', 'MVY', 'ROT', 'SHT','HLT','PSS']
 
 function Bot(clientId, x, y, botName, code) {
     this.clientId = clientId;
@@ -31,7 +31,7 @@ function Bot(clientId, x, y, botName, code) {
 	}
       } catch(err) {
 	console.log(code);
-	io.sockets.connected[clientId].emit('compile-error',"Could not execute instruction at line "+this.pc);
+	io.sockets.connected[clientId].emit('compile-error',"Could not execute instruction at or immediately after line "+this.pc);
 	this.pc = -2;
       }
     }
@@ -72,7 +72,7 @@ function execAssembly(clientId, cmnd, val) {
     switch (cmnd) {
         case 0: //jmp
             var bot = getBot(clientId);
-            bot.pc = val;
+            bot.pc = val-1;
             break;
         case 1: //mvx
             moveBot(clientId, val, 0);
@@ -81,11 +81,17 @@ function execAssembly(clientId, cmnd, val) {
             moveBot(clientId, 0, val);
             break;
         case 3: //rot
-            rotateBot(clientId, val);
+            rotateBot(clientId, val/360 * 2*PI);
             break;
-        case 4: //sht1
+        case 4: //sht
             botShoot(clientId);
             break;
+	case 5: //hlt
+	    var bot = getBot(clientId);
+            bot.pc = -2;
+	    break;
+	case 6: //pss
+	    break;
         default:
             console.log("Unrecognised Instruction: " + cmnd + " with val: " + val)
     }

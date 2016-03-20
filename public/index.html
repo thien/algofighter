@@ -29,7 +29,7 @@
 				</table>
 			</div>
 		</div>
-		<div id="compile-error"></div>
+
 		<div class="toploader">
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -43,19 +43,24 @@
 					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Run code
 					</button>
 				</div>
-				<br>
+				<div id="compile-error"></div>
 			</form>
 <div class="form-control" id="editor">MVX 10
 MVY 10
 SHT
 ROT 1
 JMP 1</div>
-<br>
 		</div>
 		</div>
 	</div>
 	</div><!-- /.container -->
 	<script>
+
+	// $("#compile-error").css({
+	//   display: "none",
+	//   visibility: "hidden"
+	// });
+
 	var editor1 = ace.edit("editor");
 	editor1.getSession().setUseWorker(false);
 	document.getElementById('editor').style.fontSize='16px';
@@ -100,7 +105,7 @@ JMP 1</div>
 		$("#table").find("tr:gt(0)").remove();
 		for (i = 0; i < data["bot"].length; i++) {
 			$("#table").find('tbody')
-			.append($('<tr class="active">')
+			.append($('<tr>')
 			.append($('<td>')
 				.html('<div class="coob" style="width:10px;height:10px;display:block;background-color:'+data["bot"][i]["color"]+ '"></div>')
 				)
@@ -115,6 +120,7 @@ JMP 1</div>
 	});
 	socket.on('compile-error', function(message) {
 	  document.getElementById("compile-error").innerHTML = message;
+
 	});
 	</script>
   </body>
