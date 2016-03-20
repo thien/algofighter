@@ -8,7 +8,7 @@ var port = process.env.PORT || 80;
 var data = {"bot":[],"projectile":[]};
 var clients = []
 var PI = Math.PI;
-cmndList = ['JMP', 'MOV', 'ROT', 'SHT']
+cmndList = ['JMP', 'MVX', 'MVY', 'ROT', 'SHT']
 
 function Bot (clientId,x,y,botName,code) {
     this.clientId = clientId;
@@ -21,6 +21,10 @@ function Bot (clientId,x,y,botName,code) {
     this.color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
     this.score = 0;
     this.turnsTillShot = 5;
+    this.pc = 0; //program counter
+    this.exec = function () {
+      execAssembly(this.clientId,this.code[this.pc][0],this.code[this.pc][1]);
+    }
 }
 
 function Projectile(clientId,x,y,angle) {
@@ -54,19 +58,23 @@ function validateList(input) {
 	return instructionList;
 }
 
-function execAssembly(cmnd, val) {
+function execAssembly(clientId,cmnd, val) {
 	switch (cmnd) {
-		case 0:
-			jmp(val)
+		case 0: //jmp
+			var bot = getBot(clientId);
+			bot.pc = val;
 			break;
-		case 1:
-			mov(val)
+		case 1: //mvx
+			moveBot(clientId,val,0);
 			break;
-		case 2:
-			rot(val)
+		case 2: //mvy
+			moveBot(clientId,0,val);
 			break;
-		case 3:
-			shoot()
+		case 3: //rot
+			rotateBot(clientId,val);
+			break;
+		case 4: //sht
+			botShoot(clientId)
 			break;
 		default:
 			console.log("PANIC!")
@@ -193,12 +201,12 @@ function updateBoardTick() {
   // console.log(data);
   for (i = 0; i < data["bot"].length; i++) {
     botClientId = data["bot"][i]["clientId"];
-    //moveBot(botClientId,randInt(-10,10),randInt(-10,10));
     if (data["bot"][i]["turnsTillShot"] > 0) {
       data["bot"][i]["turnsTillShot"] -= 1;
     }
-    rotateBot(botClientId,0.1);
-    botShoot(botClientId);
+    //rotateBot(botClientId,0.1);
+    //botShoot(botClientId);
+    data["bot"][i].exec();
   }
   for (i = 0; i < data["projectile"].length; i++) {
     data["projectile"][i]["x"] += 5*Math.cos(data["projectile"][i]["angle"]);
