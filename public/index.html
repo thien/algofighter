@@ -85,8 +85,11 @@ JMP 1</div>
 		context.arc(bot["x"]+5+9*Math.sin(bot["angle"]), bot["y"]+5-9*Math.cos(bot["angle"]), 2, 0, 2*Math.PI);
 		context.stroke();
 	}
-	function drawProjectile(x,y,context) {
-		context.fillStyle="#FF0000"; // you might want to change the colours of the bullts eventually
+	function drawProjectile(x,y,context,color) {
+		 // color = color.replace(/^#/, "");
+		 // color = parseInt(color, 10); + 50;
+		 // color = '#' + 'color';
+		context.fillStyle=color; // you might want to change the colours of the bullts eventually
 		context.fillRect(x,y,2,2);
 		context.stroke();
 	}
@@ -98,7 +101,7 @@ JMP 1</div>
 	}
 	for (var i = 0; i < data["projectile"].length; i++) {
 	    var projectile = data["projectile"][i];
-	    drawProjectile(projectile["x"],projectile["y"],context);
+	    drawProjectile(projectile["x"],projectile["y"],context,projectile["color"]);
 	  }
 	  previousData = data;
 	}
