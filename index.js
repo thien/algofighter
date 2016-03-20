@@ -23,12 +23,12 @@ function Bot (clientId,x,y,botName,code) {
       try {
 	if (this.pc > -1) {
 	  execAssembly(this.clientId,this.code[this.pc][0],this.code[this.pc][1]);
+	  this.pc+= 1;
 	}
       } catch(err) {
 	io.sockets.connected[clientId].emit('compile-error',"Could not execute instruction at line "+this.pc);
 	this.pc = -2;
       }
-      this.pc+= 1;
     }
 }
 
@@ -115,13 +115,13 @@ function rotateBot(clientId,rad) {
   var i = 0;
   while (i < data["bot"].length) {
       if (data["bot"][i]["clientId"] == clientId) {
-  data["bot"][i]["angle"] = data["bot"][i]["angle"] + rad;
-  if (data["bot"][i]["angle"] >= 2*PI) {
-    data["bot"][i]["angle"] = data["bot"][i]["angle"] - 2*PI;
-  } else if (data["bot"][i]["angle"] < 0) {
-    data["bot"][i]["angle"] = data["bot"][i]["angle"] + 2*PI;
-  }
-  return true;
+      data["bot"][i]["angle"] = data["bot"][i]["angle"] + rad;
+      if (data["bot"][i]["angle"] >= 2*PI) {
+	data["bot"][i]["angle"] = data["bot"][i]["angle"] - 2*PI;
+      } else if (data["bot"][i]["angle"] < 0) {
+	data["bot"][i]["angle"] = data["bot"][i]["angle"] + 2*PI;
+      }
+      return true;
       }
       i++;
   }
