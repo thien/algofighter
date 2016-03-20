@@ -147,8 +147,8 @@ function updateBoardTick() {
     botShoot(botClientId);
   }
   for (i = 0; i < data["projectile"].length; i++) {
-    data["projectile"][i]["x"] += 5*Math.sin(data["projectile"][i]["angle"]);
-    data["projectile"][i]["y"] += 5*Math.cos(data["projectile"][i]["angle"]);
+    data["projectile"][i]["x"] += 5*Math.cos(data["projectile"][i]["angle"]);
+    data["projectile"][i]["y"] += 5*Math.sin(data["projectile"][i]["angle"]);
     if ((data["projectile"][i]["x"] > 1000) || (data["projectile"][i]["x"] < 0) || (data["projectile"][i]["y"] < 0) || (data["projectile"][i]["y"] > 500))  {
       data["projectile"].splice(i,1);
     }
