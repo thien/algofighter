@@ -10,7 +10,9 @@
   float: left;
     margin-bottom: 4px;
 }
-
+pre {
+  font-family: 'Courier New', Monospace;
+}
 .help-text {
   float: left;
   height: 600px;
