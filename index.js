@@ -217,8 +217,8 @@ function updateProjectiles() {
     if ((data["projectile"][i]["x"] > 1000) || (data["projectile"][i]["x"] < 0) || (data["projectile"][i]["y"] < 0) || (data["projectile"][i]["y"] > 500))  {
       data["projectile"].splice(i,1);
     }
-    for (j = 0; j < data["bot"].length; j++) {
-    	
+    //for (j = 0; j < data["bot"].length; j++) {
+    //	if ((data["bot"][j]["x"]-5 < data["projectile"][i]["x"]) && data["projectile"][i]["x"]) < (data["bot"][j]["x"]+5)
     }
   }
 }
@@ -230,16 +230,12 @@ function updateBoardTick() {
         if (data["bot"][i]["turnsTillShot"] > 0) {
             data["bot"][i]["turnsTillShot"] -= 1;
         }
-        //rotateBot(botClientId,0.1);
-        //botShoot(botClientId);
-        data["bot"][i].exec();
     }
     //rotateBot(botClientId,0.1);
     //botShoot(botClientId);
     data["bot"][i].exec();
   }
   updateProjectiles();
-  io.sockets.emit('board-update', data);
   io.sockets.emit('board-update', data);
 }
 
