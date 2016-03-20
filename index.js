@@ -23,7 +23,7 @@ function Bot (clientId,x,y,botName,code) {
       try {
 	execAssembly(this.clientId,this.code[this.pc][0],this.code[this.pc][1]);
       } catch(err) {
-	io.sockets.socket(clientId).emit('compile-error',err.message);
+	io.sockets.connected[clientId].emit('compile-error',err.message);
       }
       this.pc+= 1;
     }
