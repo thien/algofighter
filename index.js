@@ -186,7 +186,8 @@ io.on('connection', function(socket){
       deleteBot(socket.id);
     }
     console.log("Creating new bot "+code);
-    data["bot"].push(new Bot(socket.id,randInt(0,999),randInt(0,499),name,validateInput(code)));
+    code = code.split("\n");
+    data["bot"].push(new Bot(socket.id,randInt(0,999),randInt(0,499),name,validateList(code)));
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');
