@@ -31,7 +31,7 @@ function botShoot(clientId) {
   var bot = getBot(clientId);
   if (bot["turnsTillShot"] == 0) {
     data["projectile"].push(new Projectile(clientId,bot["x"]+5,bot["y"]+5,bot["angle"]-PI/2));
-    bot["turnsTillShot"] == 5;
+    bot["turnsTillShot"] = 5;
   }
 }
 

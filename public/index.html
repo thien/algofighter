@@ -39,7 +39,8 @@
 			</div>
 			<form class="form-inline">
 				<div class="form-group">
-					<input type="text" class="form-control" id="bot-name"placeholder="Bot Name">
+					<input type="text" class="form-control" id="bot-name" placeholder="Bot Name" value="">
+					<script>document.getElementById("bot-name").value = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);</script>
 					<button type="submit" class="btn btn-default btn-sm pull-right run-code">
 					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Run code
 					</button>
