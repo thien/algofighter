@@ -230,16 +230,10 @@ function updateBoardTick() {
         if (data["bot"][i]["turnsTillShot"] > 0) {
             data["bot"][i]["turnsTillShot"] -= 1;
         }
-        //rotateBot(botClientId,0.1);
-        //botShoot(botClientId);
         data["bot"][i].exec();
     }
-    //rotateBot(botClientId,0.1);
-    //botShoot(botClientId);
-    data["bot"][i].exec();
   }
   updateProjectiles();
-  io.sockets.emit('board-update', data);
   io.sockets.emit('board-update', data);
 }
 
