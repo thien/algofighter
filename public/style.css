@@ -5,9 +5,10 @@
 }
 #editor {
   font-size: 12px;
-  width: 100%;
+  max-width: 1200px;
+  min-width: 800px;
   height: 400px;
-  float: left;
+    margin: 0 auto;
 }
 #table {
   width:200px;
