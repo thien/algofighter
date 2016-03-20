@@ -73,7 +73,7 @@ function execAssembly(clientId, cmnd, val) {
     switch (cmnd) {
         case 0: //jmp
             var bot = getBot(clientId);
-            bot.pc = val;
+            bot.pc = val-1;
             break;
         case 1: //mvx
             moveBot(clientId, val, 0);
