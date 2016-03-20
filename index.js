@@ -15,6 +15,7 @@ function Bot (clientId,x,y,botName,code) {
     //this.code = codeFunc;
     this.code = code;
     this.color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+    this.score = 0;
 }
 
 function Projectile(clientId,x,y,angle) {
@@ -42,7 +43,7 @@ function moveBot(clientId,distanceX,distanceY) {
       return true;
     }
     i++;
-  }  
+  }
 }
 
 function rotateBot(clientId,rad) {
@@ -138,7 +139,7 @@ io.on('connection', function(socket){
   socket.on('disconnect', function(){
     console.log('user disconnected');
     deleteBot(socket.id);
-    deleteClient(socket.id);
+    delete1Client(socket.id);
   });
 });
 

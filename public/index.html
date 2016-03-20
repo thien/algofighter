@@ -1,123 +1,107 @@
 <!doctype html>
 <html>
-<head>
-
-  <meta charset="utf-8">
-  <title>Some bot ting</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- Bootstrap goodness -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <!-- Angular badness if I feel particularly horrible -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
-  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="js/ace.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/main.js"></script>
-</head>
-<body>
-      <div class="container-fluid">
-        <div class="starter-template">
-          <h1>Some sort of bot game</h1>
-          <p class="lead">This is a bot game</p>
-        </div>
-
-	<div id="toploader">
-	  	<canvas id="arena" class="panel panel-default" width="1000px" height="500px"></canvas>
-	  <table class="table" id="table">
-		<tr>
-			<th>Colour</th>
-			<th>Name</th>
-			<th>Noms</th>
-		</tr>
-		</table>
+	<head>
+		<meta charset="utf-8">
+		<title>Some bot ting</title>
+		<link rel="stylesheet" href="style.css">
+		<!-- Bootstrap goodness -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<!-- Angular badness if I feel particularly horrible -->
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="js/ace.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/main.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="starter-template">
+				<h1>Some sort of bot game</h1>
+				<p class="lead">This is a bot game</p>
+			</div>
+			<div id="toploader">
+				<canvas id="arena" class="panel panel-default" width="1000px" height="500px"></canvas>
+				<table class="table" id="table">
+					<tr>
+						<th>Colour</th>
+						<th>Name</th>
+						<th>Noms</th>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Input code
+			</div>
+			<form class="form-inline">
+				<div class="form-group">
+					<input type="text" class="form-control" id="bot-name"placeholder="Bot Name">
+					<button type="submit" class="btn btn-default btn-sm pull-right run-code">
+					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Run code
+					</button>
+				</div>
+			</form>
+			<div id="editor" >
+			var yellow = 9;</div>
+		</div>
 	</div>
-</div>
-
-	<div class="panel panel-default">
-	  <div class="panel-heading">
-	    Input code
-	    <form action="">
-	      <button type="submit" class="btn btn-default btn-sm pull-right run-code">
-		<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Run code
-	      </button>
-	    </form>
-	  </div>
-    Bot Name: <input type="text" id="bot-name"><br>
-	  <div id="editor" >
-		var yellow = 9;</div>
-	</div>
-      </div><!-- /.container -->
-  <script>
-		var editor1 = ace.edit("editor");
-		editor1.getSession().setMode("ace/mode/javascript");
-  context = document.getElementById('arena').getContext("2d");
-  var socket = io();
-  socket.emit('connection');
-  var previousData = {};
-  $('form').submit(function(){
-    socket.emit('code submission', $('#bot-name').val(),editor1.getValue());
-    return false;
-  });
-  function clearScreen(context) {
-      context.clearRect (0,0,1000,500);
-  }
-  function drawBot(bot,context) {
-	context.fillStyle = bot["color"];
-	context.fillRect(bot["x"],bot["y"],10,10);
-	context.beginPath();
-	context.arc(bot["x"]+5+10*Math.sin(bot["angle"]/360 * 2*Math.PI), bot["y"]+5-10*Math.cos(bot["angle"]/360 * 2*Math.PI), 2, 0, 2*Math.PI);
-	context.stroke();
-  }
-  function drawProjectile(x,y,context) {
-	context.fillRect(x,y,2,2);
-	context.stroke();
-  }
-  function updateGameState(data) {
-    clearScreen(context);
-    for (var i = 0; i < data["bot"].length; i++) {
-      var bot = data["bot"][i];
-      drawBot(bot,context);
-    }
-    for (var i = 0; i < data["projectile"].length; i++) {
-      var projectile = data["projectile"][i];
-      drawProjectile(projectile["x"],projectile["y"],context);
-    }
-    previousData = data;
-  }
-
-
-  function drawtable(data) {
-  	$("#table").find("tr:gt(0)").remove();
-  	for (i = 0; i < data["bot"].length; i++) {
-  		$("#table").find('tbody')
-	    .append($('<tr>')
-	        .append($('<td>')
-	                .html('<div class="coob" style="width:10px;height:10px;display:block;background-color:'+data["bot"][i]["color"]+ '"></div>')
-	        )
-	        .append($('<td>').text(data["bot"][i]["botName"]))
-	        .append($('<td>').text(0))
-	    );
-
-
-  		// $('#table').closest('<tr>').remove();
-  		// $('#table').append($('<td>').text(data["bot"][i]["color"]));
-  		// $('#table').append($('<td>').text(data["bot"][i]["clientId"]));
-  		// $('#table').append($('<td>').text(0));
-  		// $('#table').append($('</tr>');
-		// $('.panel-body').animate({scrollTop: $('.panel-body').prop("scrollHeight")}, 0);
-  		// console.log(data["bot"][i]);
-  	}
-  }
-
-  socket.on('board-update', function(jsonData){
-    updateGameState(jsonData);
-    drawtable(jsonData);
-  });
-  // socket.on('scoreboard-update', function(jsonData){
-  //   drawtable(jsonData);
-  // });
-  </script>
-</body>
-
-</html>
+	</div><!-- /.container -->
+	<script>
+			var editor1 = ace.edit("editor");
+			editor1.getSession().setMode("ace/mode/javascript");
+	context = document.getElementById('arena').getContext("2d");
+	var socket = io();
+	socket.emit('connection');
+	var previousData = {};
+	$('form').submit(function(){
+	socket.emit('code submission', $('#bot-name').val(),editor1.getValue());
+	return false;
+	});
+	function clearScreen(context) {
+	context.clearRect (0,0,1000,500);
+	}
+	function drawBot(bot,context) {
+		context.fillStyle = bot["color"];
+		context.fillRect(bot["x"],bot["y"],10,10);
+		context.beginPath();
+		context.arc(bot["x"]+5+10*Math.sin(bot["angle"]/360 * 2*Math.PI), bot["y"]+5-10*Math.cos(bot["angle"]/360 * 2*Math.PI), 2, 0, 2*Math.PI);
+		context.stroke();
+	}
+	function drawProjectile(x,y,context) {
+		context.fillRect(x,y,2,2);
+		context.stroke();
+	}
+	function updateGameState(data) {
+	clearScreen(context);
+	for (var i = 0; i < data["bot"].length; i++) {
+	var bot = data["bot"][i];
+	drawBot(bot,context);
+	}
+	for (var i = 0; i < data["projectile"].length; i++) {
+	var projectile = data["projectile"][i];
+	drawProjectile(projectile["x"],projectile["y"],context);
+	}
+	previousData = data;
+	}
+	function drawtable(data) {
+		$("#table").find("tr:gt(0)").remove();
+		for (i = 0; i < data["bot"].length; i++) {
+			$("#table").find('tbody')
+		.append($('<tr>')
+				.append($('<td>')
+						.html('<div class="coob" style="width:10px;height:10px;display:block;background-color:'+data["bot"][i]["color"]+ '"></div>')
+						)
+						.append($('<td>').text(data["bot"][i]["botName"]))
+								.append($('<td>').text(data["bot"][i]["score"]))
+										);
+										}
+									}
+									socket.on('board-update', function(jsonData){
+									updateGameState(jsonData);
+									drawtable(jsonData);
+									});
+					</script>
+				</body>
+			</html>
