@@ -45,11 +45,17 @@
 				</div>
 				<div id="compile-error"></div>
 			</form>
-<div class="form-control" id="editor">MVX 10
-MVY 10
-SHT
-ROT 1
-JMP 1</div>
+<div class="form-control" id="editor">
+</div>
+<script>
+var moves = ["MVX 10","MVX -10","ROT 90", "ROT -90", "ROT 180", "SHT", "SHT", "SHT", "SHT", "LOK"];
+var moveString = "";
+for (int i = 0; i < randInt(5,10)) {
+  moveString += moves[randInt(0,moves.length)-1] + "\n";
+}
+moveString += "JMP 0";
+document.getElementById("editor").innerHTML = moveString;
+</script>
 		</div>
 		</div>
 	</div>
@@ -89,7 +95,7 @@ JMP 1</div>
 		 // color = color.replace(/^#/, "");
 		 // color = parseInt(color, 10); + 50;
 		 // color = '#' + 'color';
-		context.fillStyle=color; // you might want to change the colours of the bullts eventually
+		context.fillStyle=color; 
 		context.fillRect(x,y,2,2);
 		context.stroke();
 	}
