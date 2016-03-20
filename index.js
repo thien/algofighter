@@ -25,14 +25,13 @@ function Bot(clientId, x, y, botName, code) {
     this.exec = function () {
       try {
 	if (this.pc > -1) {
-	  console.log(this.pc);
 	  execAssembly(this.clientId,this.code[this.pc][0],this.code[this.pc][1]);
 	  this.pc+= 1;
 	  io.sockets.connected[clientId].emit('compile-error',"");
 	}
       } catch(err) {
 	console.log(code);
-	io.sockets.connected[clientId].emit('compile-error',"Could not execute instruction at line "+this.pc);
+	io.sockets.connected[clientId].emit('compile-error',"Could not execute instruction at or immediately after line "+this.pc);
 	this.pc = -2;
       }
     }
