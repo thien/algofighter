@@ -57,16 +57,14 @@ function indexCommand(inputCmnd) {
 function validateList(input) {
     instructionList = [];
     for (line in input) {
-	if (line[0] == '/') {
-	  var params = input[line].split(" ")
-	  var index = indexCommand(params[0])
-	  console.log(index)
-	  if (index != cmndList.length) {
-	      instructionList.push([parseInt(index), parseInt(params[1])])
-	  } else {
-	      instructionList.push(false);
-	  }
-	}
+        var params = input[line].split(" ")
+        var index = indexCommand(params[0])
+        console.log(index)
+        if (index != cmndList.length) {
+            instructionList.push([parseInt(index), parseInt(params[1])])
+        } else {
+            instructionList.push(false);
+        }
     }
     return instructionList;
 }
