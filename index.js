@@ -217,8 +217,8 @@ function updateProjectiles() {
     if ((data["projectile"][i]["x"] > 1000) || (data["projectile"][i]["x"] < 0) || (data["projectile"][i]["y"] < 0) || (data["projectile"][i]["y"] > 500))  {
       data["projectile"].splice(i,1);
     }
-    for (j = 0; j < data["bot"].length; j++) {
-    	
+    //for (j = 0; j < data["bot"].length; j++) {
+    //	if ((data["bot"][j]["x"]-5 < data["projectile"][i]["x"]) && data["projectile"][i]["x"]) < (data["bot"][j]["x"]+5)
     }
   }
 }
