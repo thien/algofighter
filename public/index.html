@@ -48,9 +48,12 @@
 <div class="form-control" id="editor">
 </div>
 <script>
+function randInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 var moves = ["MVX 10","MVX -10","ROT 90", "ROT -90", "ROT 180", "SHT", "SHT", "SHT", "SHT", "LOK"];
 var moveString = "";
-for (int i = 0; i < randInt(6,20); i++) {
+for (var i = 0; i < randInt(6,20); i++) {
   moveString += moves[randInt(0,moves.length)-1] + "\n";
 }
 moveString += "JMP 0";
