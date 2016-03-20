@@ -68,7 +68,7 @@
 		context.fillStyle = bot["color"];
 		context.fillRect(bot["x"],bot["y"],10,10);
 		context.beginPath();
-		context.arc(bot["x"]+5+10*Math.sin(bot["angle"]/360 * 2*Math.PI), bot["y"]+5-10*Math.cos(bot["angle"]/360 * 2*Math.PI), 2, 0, 2*Math.PI);
+		context.arc(bot["x"]+5+10*Math.sin(bot["angle"]), bot["y"]+5-10*Math.cos(bot["angle"]), 2, 0, 2*Math.PI);
 		context.stroke();
 	}
 	function drawProjectile(x,y,context) {

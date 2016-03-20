@@ -5,6 +5,7 @@ var io = require('socket.io')(server);
 var port = process.env.PORT || 80;
 var data = {"bot":[],"projectile":[]};
 var clients = []
+var PI = Math.PI;
 
 function Bot (clientId,x,y,botName,code) {
     this.clientId = clientId;
@@ -27,7 +28,7 @@ function Projectile(clientId,x,y,angle) {
 
 function botShoot(clientId) {
   var bot = getBot(clientId);
-  data["projectile"].append(new Projectile(clientId,bot["x"],bot["y"],bot["angle"]));
+  data["projectile"].push(new Projectile(clientId,bot["x"],bot["y"],bot["angle"]));
 }
 
 function moveBot(clientId,distanceX,distanceY) {
@@ -124,12 +125,6 @@ io.on('connection', function(socket){
   clients.push(socket.id);
   socket.on('code submission', function(name,code){
     console.log("Creating new bot "+code);
-
-    // !!MAJOR SECURITY RISK!!
-    //tempString = "function codeFunc() {" + code + "}";
-    //console.log(tempString);
-    //eval(tempString);
-    //eval("function codeFunc() " + code);
     if (hasBot(socket.id)) {
       deleteBot(socket.id);
     }
@@ -139,7 +134,7 @@ io.on('connection', function(socket){
   socket.on('disconnect', function(){
     console.log('user disconnected');
     deleteBot(socket.id);
-    delete1Client(socket.id);
+    deleteClient(socket.id);
   });
 });
 
@@ -149,10 +144,13 @@ function updateBoardTick() {
     botClientId = data["bot"][i]["clientId"];
     moveBot(botClientId,randInt(-10,10),randInt(-10,10));
     rotateBot(botClientId,randInt(-20,20));
+    if (randInt(0,2) == 1) {
+      botShoot(botClientId);
+    }
   }
   for (i = 0; i < data["projectile"].length; i++) {
-    data["projectile"][i]["x"] += 5*sin();
-    data["projectile"][i]["y"] += 5*cos();
+    data["projectile"][i]["x"] += 5*sin(data["projectile"][i]["angle"]);
+    data["projectile"][i]["y"] += 5*cos(data["projectile"][i]["angle"]);
   }
   io.sockets.emit('board-update', data);
 }
