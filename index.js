@@ -28,7 +28,7 @@ function Projectile(clientId,x,y,angle) {
 
 function botShoot(clientId) {
   var bot = getBot(clientId);
-  data["projectile"].push(new Projectile(clientId,bot["x"]+5,bot["y"]+5,bot["angle"]));
+  data["projectile"].push(new Projectile(clientId,bot["x"]+5,bot["y"]+5,bot["angle"]-PI/2));
 }
 
 function moveBot(clientId,distanceX,distanceY) {
