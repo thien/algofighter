@@ -24,6 +24,7 @@ function Bot (clientId,x,y,botName,code) {
 	if (this.pc > -1) {
 	  execAssembly(this.clientId,this.code[this.pc][0],this.code[this.pc][1]);
 	  this.pc+= 1;
+	  io.sockets.connected[clientId].emit('compile-error',"");
 	}
       } catch(err) {
 	io.sockets.connected[clientId].emit('compile-error',"Could not execute instruction at line "+this.pc);
