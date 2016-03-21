@@ -177,7 +177,7 @@ function rotateBot(clientId, rad) {
 
 //Server goodness
 server.listen(port, function() {
-    console.log('Server listening athttp://52.49.29.249/ port %d', port);
+    console.log('Server listening at port %d', port);
 });
 
 //Routing
@@ -276,16 +276,18 @@ function updateProjectiles() {
 function updateCollisions() {
 	for (i = 0; i < data["projectile"].length; i++) {
 		for (j = 0; j < data["bot"].length; j++) {
-    		if ((data["bot"][j]["x"]-6 < data["projectile"][i]["x"]) && ((data["projectile"][i]["x"]) < (data["bot"][j]["x"]+6))
-    		&&  (data["bot"][j]["y"]-6 < data["projectile"][i]["y"]) && ((data["projectile"][i]["y"]) < (data["bot"][j]["y"]+6))
-    		&& 	(data["bot"][j]["clientId"] != data["projectile"][i]["clientId"])) {
-			if (hasBot(data["projectile"][i]["clientId"])) {
-			  data["bot"][getBotIndex(data["projectile"][i]["clientId"])]["score"] += 1 + data["bot"][j]["score"]    
-			}
-    			data["projectile"].splice(i,1);
-    			data["bot"].splice(j,1);    			
-    		}
-    	}
+		  if ((typeof data["bot"][j] !== "undefined") && (typeof data["projectile"][i] !=== "undefined") ) {
+		    if ((data["bot"][j]["x"]-6 < data["projectile"][i]["x"]) && ((data["projectile"][i]["x"]) < (data["bot"][j]["x"]+6))
+		    &&  (data["bot"][j]["y"]-6 < data["projectile"][i]["y"]) && ((data["projectile"][i]["y"]) < (data["bot"][j]["y"]+6))
+		    && 	(data["bot"][j]["clientId"] != data["projectile"][i]["clientId"])) {
+			    if (hasBot(data["projectile"][i]["clientId"])) {
+			      data["bot"][getBotIndex(data["projectile"][i]["clientId"])]["score"] += 1 + data["bot"][j]["score"]    
+			    }
+			    data["projectile"].splice(i,1);
+			    data["bot"].splice(j,1);    			
+		    }
+		  }
+		}
 	}
 }
 
