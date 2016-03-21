@@ -276,7 +276,7 @@ function updateProjectiles() {
 function updateCollisions() {
 	for (i = 0; i < data["projectile"].length; i++) {
 		for (j = 0; j < data["bot"].length; j++) {
-		  if ((typeof data["bot"][j] !== "undefined") && (typeof data["projectile"][i] !=== "undefined") ) {
+		  if ((typeof data["bot"][j] !== "undefined") && (typeof data["projectile"][i] !== "undefined") ) {
 		    if ((data["bot"][j]["x"]-6 < data["projectile"][i]["x"]) && ((data["projectile"][i]["x"]) < (data["bot"][j]["x"]+6))
 		    &&  (data["bot"][j]["y"]-6 < data["projectile"][i]["y"]) && ((data["projectile"][i]["y"]) < (data["bot"][j]["y"]+6))
 		    && 	(data["bot"][j]["clientId"] != data["projectile"][i]["clientId"])) {
