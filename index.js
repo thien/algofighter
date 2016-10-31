@@ -237,6 +237,17 @@ function rotateBot(clientId, degree) {
     }
 }
 
+<<<<<<< HEAD
+=======
+//Server goodness
+server.listen(port, function() {
+    console.log('Server listening at port %d', port);
+});
+
+//Routing
+app.use('/', express.static('public'));
+
+>>>>>>> origin/master
 function deleteClient(clientId) {
     //removes socket from list of players.
     var i = 0;
@@ -393,4 +404,55 @@ io.on('connection', function(socket) {
     });
 });
 
+<<<<<<< HEAD
 setInterval(updateBoardTick, 50);
+=======
+function updateProjectiles() {
+	for (i = 0; i < data["projectile"].length; i++) {
+  	//Updates positions of projectiles
+    data["projectile"][i]["x"] += 5*Math.cos(data["projectile"][i]["angle"]);
+    data["projectile"][i]["y"] += 5*Math.sin(data["projectile"][i]["angle"]);
+    //Deletes if they go off the screen
+    if ((data["projectile"][i]["x"] > 1000) || (data["projectile"][i]["x"] < 0) || (data["projectile"][i]["y"] < 0) || (data["projectile"][i]["y"] > 500))  {
+      data["projectile"].splice(i,1);
+    }
+  }
+}
+
+function updateCollisions() {
+	for (i = 0; i < data["projectile"].length; i++) {
+		for (j = 0; j < data["bot"].length; j++) {
+		  if ((typeof data["bot"][j] !== "undefined") && (typeof data["projectile"][i] !== "undefined") ) {
+		    if ((data["bot"][j]["x"]-6 < data["projectile"][i]["x"]) && ((data["projectile"][i]["x"]) < (data["bot"][j]["x"]+6))
+		    &&  (data["bot"][j]["y"]-6 < data["projectile"][i]["y"]) && ((data["projectile"][i]["y"]) < (data["bot"][j]["y"]+6))
+		    && 	(data["bot"][j]["clientId"] != data["projectile"][i]["clientId"])) {
+			    if (hasBot(data["projectile"][i]["clientId"])) {
+			      data["bot"][getBotIndex(data["projectile"][i]["clientId"])]["score"] += 1 + data["bot"][j]["score"]    
+			    }
+			    data["projectile"].splice(i,1);
+			    data["bot"].splice(j,1);    			
+		    }
+		  }
+		}
+	}
+}
+
+function updateBoardTick() {
+  for (i = 0; i < data["bot"].length; i++) {
+      botClientId = data["bot"][i]["clientId"];
+      if (data["bot"][i]["turnsTillShot"] > 0) {
+	  data["bot"][i]["turnsTillShot"] -= 1;
+      }
+      data["bot"][i].exec();
+  }
+  updateProjectiles();
+  updateCollisions();
+  io.sockets.emit('board-update', data);
+}
+
+function randInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+setInterval(updateBoardTick, 50);
+>>>>>>> origin/master
