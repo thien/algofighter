@@ -237,8 +237,6 @@ function rotateBot(clientId, degree) {
     }
 }
 
-<<<<<<< HEAD
-=======
 //Server goodness
 server.listen(port, function() {
     console.log('Server listening at port %d', port);
@@ -247,7 +245,6 @@ server.listen(port, function() {
 //Routing
 app.use('/', express.static('public'));
 
->>>>>>> origin/master
 function deleteClient(clientId) {
     //removes socket from list of players.
     var i = 0;
@@ -404,9 +401,9 @@ io.on('connection', function(socket) {
     });
 });
 
-<<<<<<< HEAD
 setInterval(updateBoardTick, 50);
-=======
+
+
 function updateProjectiles() {
 	for (i = 0; i < data["projectile"].length; i++) {
   	//Updates positions of projectiles
@@ -427,10 +424,10 @@ function updateCollisions() {
 		    &&  (data["bot"][j]["y"]-6 < data["projectile"][i]["y"]) && ((data["projectile"][i]["y"]) < (data["bot"][j]["y"]+6))
 		    && 	(data["bot"][j]["clientId"] != data["projectile"][i]["clientId"])) {
 			    if (hasBot(data["projectile"][i]["clientId"])) {
-			      data["bot"][getBotIndex(data["projectile"][i]["clientId"])]["score"] += 1 + data["bot"][j]["score"]    
+			      data["bot"][getBotIndex(data["projectile"][i]["clientId"])]["score"] += 1 + data["bot"][j]["score"]
 			    }
 			    data["projectile"].splice(i,1);
-			    data["bot"].splice(j,1);    			
+			    data["bot"].splice(j,1);
 		    }
 		  }
 		}
@@ -455,4 +452,3 @@ function randInt(min, max) {
 }
 
 setInterval(updateBoardTick, 50);
->>>>>>> origin/master
